@@ -1,0 +1,16 @@
+/* upload.component.css */
+.file-input input[type="file"] {
+    display: none; /* Oculta el input real */
+  }
+  
+  .file-input button {
+    margin-right: 8px;
+  }
+
+
+  .title_center {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+  }
