@@ -72,7 +72,7 @@ export class SendBillComponent implements OnInit {
     */
 
     this.dteService.SubmitDTE(submit_params).subscribe({
-      next: (v) => {  this.spinnerValue = 80;   },
+      next: (v) => {  this.spinnerValue = 80;  this.GetAllPendinBill(); },
       error: (e) => {
         this.spinnerValue = 80; 
         this.openDialog('0ms', '0ms');
