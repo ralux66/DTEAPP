@@ -18,6 +18,7 @@ import { LogCaseComponent } from './log-case/log-case.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { CustomerComponent } from './customer/customer.component';
+
  
 
 @NgModule({
@@ -41,7 +42,7 @@ import { CustomerComponent } from './customer/customer.component';
     MaterialModule,
     FilePickerModule
   ],
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
