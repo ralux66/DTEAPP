@@ -1,9 +1,13 @@
-
-<mat-card>
+<mat-card class="title_center">
   <mat-card-title>Cargar Factruas</mat-card-title>
 </mat-card>
-<div class="title_center">
-  <ngx-awesome-uploader [adapter]="adapter" [enableCropper]="true" [fileMaxSize]="200"
-    (uploadSuccess)="uploadSuccess($event)" (validationError)="onValidationError($event)">
-  </ngx-awesome-uploader>
-</div>
+
+
+
+<mat-card class="title_center">
+  <mat-card-content>
+    <ngx-awesome-uploader [adapter]="adapter" [enableCropper]="true" [fileMaxSize]="200"
+      (uploadSuccess)="uploadSuccess($event)" (validationError)="onValidationError($event)">
+    </ngx-awesome-uploader>
+  </mat-card-content>
+</mat-card>

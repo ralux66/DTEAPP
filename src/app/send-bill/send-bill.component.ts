@@ -15,12 +15,12 @@ export class SendBillComponent implements OnInit {
   displayedColumns: string[] = [
     "RecLoc",
     'Dte-Number',
-     'CodigoGeneracion',
-     'FirstName',
+    'CodigoGeneracion',
+    'FirstName',
     'LastName',
     'BookingDate',
-   /* 'ArcIata',
-     */
+    /* 'ArcIata',
+      */
     /*  
      'FlightDate', */
     //'SegmentOrigin',
@@ -53,7 +53,7 @@ export class SendBillComponent implements OnInit {
 
   SubmiteDTE(element: BillDTE) {
     this.showSpinner = true;
-    this.spinnerValue = 40;
+    this.spinnerValue = 30;
     let submit_params: SubmiteDTE.Param;
     submit_params = new SubmiteDTE.Param();
     submit_params.companynit = '94501110101012';
@@ -72,15 +72,17 @@ export class SendBillComponent implements OnInit {
     */
 
     this.dteService.SubmitDTE(submit_params).subscribe({
-      next: (v) => {  this.spinnerValue = 80;  this.GetAllPendinBill(); },
+      next: (v) => { this.spinnerValue = 60; },
       error: (e) => {
-        this.spinnerValue = 80; 
+        this.spinnerValue = 100;
+        this.showSpinner = false;
         this.openDialog('0ms', '0ms');
         this.GetAllPendinBill();
-        
+
       },
       complete: () => {
-        this.showSpinner=false; 
+        this.spinnerValue = 100;
+        this.showSpinner = false;
         this.openDialog('0ms', '0ms');
         this.GetAllPendinBill();
       }
@@ -109,14 +111,14 @@ export class SendBillComponent implements OnInit {
     */
 
     this.dteService.SubmiteAllDTE(submit_params).subscribe({
-      next: (v) => {   this.spinnerValue = 80; },
+      next: (v) => { this.spinnerValue = 80; },
       error: (e) => {
-        this.showSpinner=false; 
+        this.showSpinner = false;
         this.openDialog('0ms', '0ms');
         this.GetAllPendinBill();
       },
       complete: () => {
-        this.showSpinner=false; 
+        this.showSpinner = false;
         this.openDialog('0ms', '0ms');
         this.GetAllPendinBill();
       }

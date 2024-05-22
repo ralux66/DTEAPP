@@ -101,7 +101,7 @@ export module BillDTE {
 }
 
 export class User {
-    public companyguid: string;
+    public customerguid: string;
     public userguid: string;
     public nombre: string;
     public codigo: string;
@@ -113,10 +113,11 @@ export class User {
     public token: string;
     public tokenType: string;
     public roles: string;
+    public email: string;
     public password: string;
 
     constructor(
-        companyguid: string = "",
+        customerguid: string = "",
         userguid: string = "",
         nombre: string = "",
         codigo: string = "",
@@ -128,9 +129,10 @@ export class User {
         token: string = "",
         tokenType: string = "",
         roles: string = "",
-        password: string = ""
+        password: string = "",
+        email: string = ""
     ) {
-        this.companyguid = companyguid;
+        this.customerguid = customerguid;
         this.userguid = userguid;
         this.nombre = nombre;
         this.codigo = codigo;
@@ -143,6 +145,7 @@ export class User {
         this.tokenType = tokenType;
         this.roles = roles;
         this.password = password;
+        this.email = email;
     }
 }
 
@@ -214,6 +217,11 @@ export class Customer {
         this.codPuntoVenta = codPuntoVenta;
     }
 }
+export module Customer {
+    export class Param {
+        public customerguid?: string;
+    }
+}
 
 export class Logs {
     public companyguid: string;
@@ -235,6 +243,8 @@ export class Logs {
 
 export module Logs {
     export class Param {
-        public companyguid?: string;        
+        public companyguid?: string;
     }
 }
+
+

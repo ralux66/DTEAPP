@@ -15,12 +15,12 @@ const routes: Routes = [
   //
 
   { path: 'send-bill', component: SendBillComponent },
-  { path: '', component: BillDteComponent }, //historico
+  { path: '', component: LoginComponent, pathMatch: 'full' }, //historico
   { path: 'dte-bill', component: BillDteComponent }, //historico
 
   { path: 'proces-bill', component: ProcessBillComponent },
   { path: 'log-case', component: LogCaseComponent },
-  { path: 'loging', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'customer', component: CustomerComponent },
   { path: 'user', component: UserComponent },
   // { path: '**', component: MainMenuBarComponent},

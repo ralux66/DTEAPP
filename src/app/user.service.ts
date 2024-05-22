@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
+import { HttpClient,   } from '@angular/common/http';
 import { ApiService } from "./app.service";
-import { BillDTE, DTE } from "./model/Entities";
+import {   User } from "./model/Entities";
 import { Observable } from 'rxjs';
 
 
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
     }
 )
 
-export class DteService {
+export class UserService {
     ApiURL: string = '';
     constructor(
         private http: HttpClient,
@@ -20,7 +20,7 @@ export class DteService {
         this.ApiURL = aService.ApiURL;
     }
 
-    GetAllBillByCompany(inputValue: DTE.Param): Observable<BillDTE[]> {  
+  /*   GetAllBillByCompany(inputValue: DTE.Param): Observable<BillDTE[]> {  
         return this.http.post<BillDTE[]>(
             `${this.ApiURL}/api/bill/findBillByCompany`, inputValue);
     }
@@ -33,5 +33,9 @@ export class DteService {
     GetAllBillPending(inputValue: DTE.Param): Observable<BillDTE[]> {
         return this.http.post<BillDTE[]>(
             `${this.ApiURL}/api/bill/findAllPendingBillByCompany`, inputValue);
-    }
+    } */
+
+    getUserByPassword(params: User.Param): Observable<User> {
+        return this.http.post<User>(`${this.ApiURL}/api/user/getUserByPassword`, params);
+      }
 }

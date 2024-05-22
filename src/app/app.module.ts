@@ -20,6 +20,15 @@ import { UserComponent } from './user/user.component';
 import { CustomerComponent } from './customer/customer.component';
 
  
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,16 +40,25 @@ import { CustomerComponent } from './customer/customer.component';
     LogCaseComponent,
     LoginComponent,
     UserComponent,
-    CustomerComponent
+    CustomerComponent,
+  
   ],
   imports: [     
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-
+    MatCardModule,
+    MatFormFieldModule,
     MaterialModule,
-    FilePickerModule
+    FilePickerModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatTabsModule,
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [ ],
   bootstrap: [AppComponent]

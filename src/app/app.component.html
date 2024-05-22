@@ -1,5 +1,9 @@
-<!--  -->
-<app-main-menu-bar></app-main-menu-bar>
+<div *ngIf="!isLoginPage">
+    <app-main-menu-bar></app-main-menu-bar>
+</div>
+<div *ngIf="isLoginPage">
+    <app-login></app-login>
+</div>
 <div style="text-align: center; margin-top: auto;">
     <router-outlet></router-outlet>
 </div>

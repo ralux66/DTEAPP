@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DteService } from '../dte.service';
-import { BillDTE } from '../model/Entities';
+import { BillDTE, DTE } from '../model/Entities';
 
 
 @Component({
@@ -16,6 +16,8 @@ export class BillDteComponent implements OnInit {
   ListDteBill: BillDTE[];
   //dataSourceOne : BillDTE[] =[] ;
   dataSource: BillDTE[];
+  showSpinner: boolean = false;
+  spinnerValue: number = 0;
 
   constructor(private dteService: DteService) {
     this.ListDteBill = [];
@@ -47,10 +49,23 @@ export class BillDteComponent implements OnInit {
   //dataSourceOne = ELEMENT_DATA;
 
   ngOnInit(): void {
-    this.dteService.GetAllBillByCompany(
-      { customerguid: '123e4567-e89b-12d3-a456-426655440000', status: 'E' }).subscribe((result: BillDTE[]) => {
-        this.dataSource = result; //ELEMENT_DATA_BILL;
-      });
+    this.showSpinner = true;
+    this.spinnerValue = 30;
+    const customerguid = sessionStorage.getItem('customerguid')?.toString();
+    const params = new DTE.Param();
+    params.customerguid = customerguid;
+    params.status = 'E';
+
+    this.dteService.GetAllBillByCompany(params).subscribe((result: BillDTE[]) => {
+      //ELEMENT_DATA_BILL;
+      this.spinnerValue = 60;
+      if (result) {
+        this.spinnerValue = 100;
+        this.dataSource = result;
+        this.showSpinner = false;
+       
+      }
+    });
   }
 }
 
