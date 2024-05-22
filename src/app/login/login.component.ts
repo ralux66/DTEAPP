@@ -51,8 +51,6 @@ export class LoginComponent {
       (data: User) => {
         // Manejar la respuesta del API
         if (data) {
-        
-
           this.customerServices.GetCustomerByCompanyguid({ customerguid: data.customerguid }).subscribe(
             (result: Customer) => {
               if (result) {
@@ -60,8 +58,7 @@ export class LoginComponent {
                 this.router.navigate(['/dte-bill']);
               }
             }
-          ); 
-       
+          );        
         } else {
           this.errorMessage = 'Usuario o password invalidos';
         }
