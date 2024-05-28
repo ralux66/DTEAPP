@@ -42,7 +42,10 @@ export class BillDteComponent implements OnInit {
     //'SegmentDest',
     'Base',
     'SV',
+    'SubmitDte',
+    'BacheNumber',
     'Estatus',
+   
     //'Action'
   ];
   //this.dataSourceOne = ELEMENT_DATA;

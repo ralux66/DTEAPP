@@ -1,4 +1,3 @@
-import { Serializer } from "@angular/compiler";
 
 export class DTE {
     public CompanyID: number;
@@ -28,13 +27,15 @@ export class SubmiteDTE {
 
 export module SubmiteDTE {
     export class Param {
-        public companynit: string;
+        public customerguid?:string;
+        public companynit?: string;
         public passwordAuth: string;
         public passwordFirmardocumento: string;
         public userAPI: string;
         public status: string;
         public NumeroControl: string;
         constructor() {
+            this.customerguid='';
             this.companynit = '';
             this.userAPI = '';
             this.passwordAuth = '';
@@ -69,6 +70,8 @@ export class BillDTE {
     public CurrencyBase: string;
     public SV: number;
     public Status: string;
+    public SubmitDte: Date;
+    public BatchTransaction: string;
 
     constructor() {
         this.customerguid = '';
@@ -89,6 +92,9 @@ export class BillDTE {
         this.CurrencyBase = '';
         this.SV = 0;
         this.Status = '';
+        this.SubmitDte= new Date();
+        this.BatchTransaction='';
+
     }
 
 }
@@ -176,7 +182,7 @@ export class Customer {
     public codEstable: string;
     public codPuntoVentaMH: string;
     public codPuntoVenta: string;
-
+     
     constructor(
         customerguid: string,
         nombre: string,
@@ -195,7 +201,8 @@ export class Customer {
         codEstableMH: string,
         codEstable: string,
         codPuntoVentaMH: string,
-        codPuntoVenta: string
+        codPuntoVenta: string,
+       
     ) {
         this.customerguid = customerguid;
         this.nombre = nombre;
@@ -215,11 +222,13 @@ export class Customer {
         this.codEstable = codEstable;
         this.codPuntoVentaMH = codPuntoVentaMH;
         this.codPuntoVenta = codPuntoVenta;
+         
     }
 }
+
 export module Customer {
     export class Param {
-        public customerguid?: string;
+        public customerguid?: string;        
     }
 }
 

@@ -87,6 +87,11 @@
         <ng-container matColumnDef="SV">
           <th mat-header-cell *matHeaderCellDef>Iva</th>
           <td mat-cell *matCellDef="let element">{{element.SV | currency}}</td>
+        </ng-container>    
+
+        <ng-container matColumnDef="BatchTransaction">
+          <th mat-header-cell *matHeaderCellDef>Numero de lote</th>
+          <td mat-cell *matCellDef="let element">{{element.BatchTransaction  }}</td>
         </ng-container>
 
         <ng-container matColumnDef="Estatus">

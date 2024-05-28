@@ -27,7 +27,8 @@ export class SendBillComponent implements OnInit {
     //'SegmentDest',
     'Base',
     'SV',
-    'Estatus',
+    'BatchTransaction',    
+    'Estatus',   
     'Action'
   ];
   dataSource: BillDTE[] = []; //ELEMENT_DATA;
@@ -43,8 +44,8 @@ export class SendBillComponent implements OnInit {
   }
 
   GetAllPendinBill() {
-    let bill_params: DTE.Param = new DTE.Param();
-    bill_params.customerguid = '123e4567-e89b-12d3-a456-426655440000';
+    let bill_params: DTE.Param = new DTE.Param();    
+    bill_params.customerguid = sessionStorage.getItem('customerguid')?.toString();;
     bill_params.status = 'P';
     this.dteService.GetAllBillPending(bill_params).subscribe((result: BillDTE[]) => {
       this.dataSource = result;
@@ -56,7 +57,9 @@ export class SendBillComponent implements OnInit {
     this.spinnerValue = 30;
     let submit_params: SubmiteDTE.Param;
     submit_params = new SubmiteDTE.Param();
-    submit_params.companynit = '94501110101012';
+    //submit_params.companynit = '94501110101012';
+    submit_params.companynit = sessionStorage.getItem('customer_nit')?.toString();
+    submit_params.customerguid = sessionStorage.getItem('customerguid')?.toString();
     submit_params.userAPI = '94501110101012';
     submit_params.passwordAuth = 'SpiritAirline@2023';
     submit_params.passwordFirmardocumento = 'impuestos2016';
@@ -72,6 +75,7 @@ export class SendBillComponent implements OnInit {
     */
 
     this.dteService.SubmitDTE(submit_params).subscribe({
+      
       next: (v) => { this.spinnerValue = 60; },
       error: (e) => {
         this.spinnerValue = 100;
@@ -95,7 +99,8 @@ export class SendBillComponent implements OnInit {
     this.spinnerValue = 40;
     let submit_params: SubmiteDTE.Param;
     submit_params = new SubmiteDTE.Param();
-    submit_params.companynit = '94501110101012';
+    submit_params.companynit = sessionStorage.getItem('customer_nit')?.toString();
+    submit_params.customerguid = sessionStorage.getItem('customerguid')?.toString();
     submit_params.userAPI = '94501110101012';
     submit_params.passwordAuth = 'SpiritAirline@2023';
     submit_params.passwordFirmardocumento = 'impuestos2016';

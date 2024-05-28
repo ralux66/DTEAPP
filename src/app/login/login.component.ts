@@ -52,9 +52,9 @@ export class LoginComponent {
         // Manejar la respuesta del API
         if (data) {
           this.customerServices.GetCustomerByCompanyguid({ customerguid: data.customerguid }).subscribe(
-            (result: Customer) => {
-              if (result) {
-                this.dataSave(data, result);
+            (customer: any) => {
+              if (customer) {
+                this.dataSave(data,  customer[0]);
                 this.router.navigate(['/dte-bill']);
               }
             }
@@ -72,10 +72,17 @@ export class LoginComponent {
   };
 
   dataSave(user: User, customer: Customer) {
-    sessionStorage.setItem('customerguid', user.customerguid);
+    
+    sessionStorage.setItem('customerguid', customer.customerguid);
+    sessionStorage.setItem('customer_nit', customer.nit);
+    sessionStorage.setItem('customer_nombre', customer.nombre);
+    
+  
+   
     sessionStorage.setItem('userguid', user.userguid);
-    sessionStorage.setItem('userguid', user.codigo);
-     
+    sessionStorage.setItem('usercodigo', user.codigo);
+ 
+    sessionStorage.setItem('usernombre', user.nombre);
   }
   deleteAll() {
     sessionStorage.clear();

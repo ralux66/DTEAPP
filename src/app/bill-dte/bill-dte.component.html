@@ -51,6 +51,17 @@
         <td mat-cell *matCellDef="let element">{{element.SV | currency}}</td>
       </ng-container>
 
+     
+      <ng-container matColumnDef="BacheNumber">
+        <th mat-header-cell *matHeaderCellDef>Numero de lote</th>
+        <td mat-cell *matCellDef="let element">{{element.BacheNumber  }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="SubmitDte">
+        <th mat-header-cell *matHeaderCellDef>Fecha de envio</th>
+        <td mat-cell *matCellDef="let element">{{element.SubmitDte  }}</td>
+      </ng-container>
+
       <ng-container matColumnDef="Estatus">
         <th mat-header-cell *matHeaderCellDef> Estatus </th>
         <td mat-cell *matCellDef="let element">

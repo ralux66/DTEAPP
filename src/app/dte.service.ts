@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
 import { ApiService } from "./app.service";
-import { BillDTE, DTE, SubmiteDTE } from "./model/Entities";
+import { BillDTE, Customer, DTE, SubmiteDTE } from "./model/Entities";
 import { Observable } from 'rxjs';
 
 
@@ -20,14 +20,15 @@ export class DteService {
         this.ApiURL = aService.ApiURL;
     }
 
-    GetAllBillByCompany(inputValue: DTE.Param): Observable<BillDTE[]> {  
+    GetAllBillByCompany(inputValue: DTE.Param): Observable<BillDTE[]> {
         return this.http.post<BillDTE[]>(
             `${this.ApiURL}/api/bill/findBillByCompany`, inputValue);
     }
 
     SetUploadFile(inputFile: FormData) {
+
         return this.http.post<HttpEvent<any>>(
-            `${this.ApiURL}/api/bill/uploadFile`, inputFile);
+            `${this.ApiURL}/api/bill/uploadFile`,  inputFile );
     }
 
     GetAllBillPending(inputValue: DTE.Param): Observable<BillDTE[]> {
@@ -46,8 +47,8 @@ export class DteService {
         return this.http.post<BillDTE[]>(
             `${this.ApiURL}/api/bill/submitbill`, inputValue);
     }
-    
-    SubmiteAllDTE(inputValue: SubmiteDTE.Param):Observable<BillDTE[]>{
-        return this.http.post<BillDTE[]>(`${this.ApiURL}/api/bill/submitAllbill`,inputValue);
+
+    SubmiteAllDTE(inputValue: SubmiteDTE.Param): Observable<BillDTE[]> {
+        return this.http.post<BillDTE[]>(`${this.ApiURL}/api/bill/submitAllbill`, inputValue);
     }
 }
