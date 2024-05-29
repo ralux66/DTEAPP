@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-menu-bar',
@@ -12,10 +12,11 @@ export class MainMenuBarComponent implements OnInit {
   company_name?: string;
   company_nit?: string;
   user_name?: string;
-  constructor() {
+  constructor(private router: Router) {
     this.company_nit = '';
     this.company_name = '';
     this.user_name = '';
+    
   }
 
   ngOnInit(): void {
@@ -30,5 +31,10 @@ export class MainMenuBarComponent implements OnInit {
   badgevisible = false;
   badgevisibility() {
     this.badgevisible = true;
+  }
+
+  deleteSession(){
+    sessionStorage.clear();
+    this.router.navigate(['/']);
   }
 }

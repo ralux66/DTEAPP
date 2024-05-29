@@ -10,8 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ProcessBillComponent } from './process-bill/process-bill.component';
 import { MainMenuBarComponent } from './main-menu-bar/main-menu-bar.component';
-import {FilePickerModule} from 'ngx-awesome-uploader';
- 
+import { FilePickerModule } from 'ngx-awesome-uploader';
+
 import { MaterialModule } from './material.module';
 import { SendBillComponent } from './send-bill/send-bill.component';
 import { LogCaseComponent } from './log-case/log-case.component';
@@ -19,7 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { CustomerComponent } from './customer/customer.component';
 
- 
+
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -27,23 +27,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
-
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainMenuBarComponent, 
+    MainMenuBarComponent,
     BillDteComponent,
-    ProcessBillComponent, 
+    ProcessBillComponent,
     SendBillComponent,
     LogCaseComponent,
     LoginComponent,
     UserComponent,
     CustomerComponent,
-  
+
   ],
-  imports: [     
+  imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -58,9 +60,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTabsModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
-  providers: [ ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

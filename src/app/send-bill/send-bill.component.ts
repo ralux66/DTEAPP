@@ -4,6 +4,7 @@ import { BillDTE, DTE, SubmiteDTE } from '../model/Entities';
 import { DteService } from '../dte.service';
 import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -27,15 +28,15 @@ export class SendBillComponent implements OnInit {
     //'SegmentDest',
     'Base',
     'SV',
-    'BatchTransaction',    
-    'Estatus',   
+    'BatchTransaction',
+    'Estatus',
     'Action'
   ];
   dataSource: BillDTE[] = []; //ELEMENT_DATA;
   clickedRows = new Set<BillDTE>();
   showSpinner: boolean = false;
   spinnerValue: number = 0;
-  constructor(private dteService: DteService, public dialog: MatDialog) {
+  constructor(private dteService: DteService, public dialog: MatDialog,private router: Router) {
   };
 
 
@@ -44,7 +45,7 @@ export class SendBillComponent implements OnInit {
   }
 
   GetAllPendinBill() {
-    let bill_params: DTE.Param = new DTE.Param();    
+    let bill_params: DTE.Param = new DTE.Param();
     bill_params.customerguid = sessionStorage.getItem('customerguid')?.toString();;
     bill_params.status = 'P';
     this.dteService.GetAllBillPending(bill_params).subscribe((result: BillDTE[]) => {
@@ -73,9 +74,20 @@ export class SendBillComponent implements OnInit {
            return result;
          });
     */
+    this.dteService.SubmiteAllDTE(submit_params).subscribe((result: any) => {
+      if (result) {
+        this.spinnerValue = 80;
+        this.showSpinner = false;
+        this.openDialog('0ms', '0ms');
+        this.router.navigate(['/dte-bill']);
+        //this.GetAllPendinBill();
+      } else {
+        this.showSpinner = false;
+        this.openDialog('0ms', '0ms');
+      }
+    });
+    /* this.dteService.SubmitDTE(submit_params).subscribe({
 
-    this.dteService.SubmitDTE(submit_params).subscribe({
-      
       next: (v) => { this.spinnerValue = 60; },
       error: (e) => {
         this.spinnerValue = 100;
@@ -90,7 +102,7 @@ export class SendBillComponent implements OnInit {
         this.openDialog('0ms', '0ms');
         this.GetAllPendinBill();
       }
-    });
+    }); */
   }
 
 
@@ -114,20 +126,28 @@ export class SendBillComponent implements OnInit {
            return result;
          });
     */
-
-    this.dteService.SubmiteAllDTE(submit_params).subscribe({
-      next: (v) => { this.spinnerValue = 80; },
-      error: (e) => {
+    this.dteService.SubmiteAllDTE(submit_params).subscribe((result: any) => {
+      if (result) {
+        this.spinnerValue = 80;
         this.showSpinner = false;
-        this.openDialog('0ms', '0ms');
-        this.GetAllPendinBill();
-      },
-      complete: () => {
+        this.router.navigate(['/dte-bill']);
+      } else {
         this.showSpinner = false;
-        this.openDialog('0ms', '0ms');
-        this.GetAllPendinBill();
       }
     });
+    /*  this.dteService.SubmiteAllDTE(submit_params).subscribe({
+       next: (v) => { this.spinnerValue = 80; },
+       error: (e) => {
+         this.showSpinner = false;
+         this.openDialog('0ms', '0ms');
+         this.GetAllPendinBill();
+       },
+       complete: () => {
+         this.showSpinner = false;
+         this.openDialog('0ms', '0ms');
+         this.GetAllPendinBill();
+       }
+     }); */
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {

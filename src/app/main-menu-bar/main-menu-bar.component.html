@@ -19,8 +19,8 @@
         <mat-icon aria-hidden="false" aria-label="Usuario del sistema" fontIcon="account_circle"></mat-icon>
         Usuario
     </button>
-    <button routerLink="" mat-button>
-        <mat-icon aria-hidden="false" aria-label="Salir de la sesion" fontIcon="logout"></mat-icon>
+    <button onclick="deleteSession()" routerLink="" mat-button>
+        <mat-icon aria-hidden="false" aria-label="Salir de la sesion"  fontIcon="logout"></mat-icon>
         Cerrar Sesion
     </button>
     <mat-menu #lvl1master="matMenu">
@@ -69,7 +69,7 @@
 </mat-toolbar>
 
 <mat-drawer-container autosize>
-    <mat-drawer #drawer opened="true" mode="side" position="start">
+    <mat-drawer #drawer opened="false" mode="over" position="start">
         <mat-nav-list>
             <mat-list-item>
                 <button routerLink="proces-bill" mat-button>

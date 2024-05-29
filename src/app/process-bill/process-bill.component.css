@@ -7,9 +7,15 @@
     margin-right: 8px;
   }
 
+  .file-input-alter button {
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: 0;    
+    float: right;
+  }
 
   .title_center {
-    margin-top: 8px;
+   /*  margin-top: 8px; */
     display: flex;
     justify-content: center; /* align horizontal */
     align-items: center; /* align vertical */

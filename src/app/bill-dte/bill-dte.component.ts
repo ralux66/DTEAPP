@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { DteService } from '../dte.service';
 import { BillDTE, DTE } from '../model/Entities';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -15,13 +17,18 @@ import { BillDTE, DTE } from '../model/Entities';
 export class BillDteComponent implements OnInit {
   ListDteBill: BillDTE[];
   //dataSourceOne : BillDTE[] =[] ;
-  dataSource: BillDTE[];
+  dataSource: any; //BillDTE[];
   showSpinner: boolean = false;
   spinnerValue: number = 0;
+   
 
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  
   constructor(private dteService: DteService) {
     this.ListDteBill = [];
     this.dataSource = [];
+    this.paginator;
   };
 
   /* displayedColumns: string[] = ['customerguid', 'NumeroControl',
@@ -43,7 +50,7 @@ export class BillDteComponent implements OnInit {
     'Base',
     'SV',
     'SubmitDte',
-    'BacheNumber',
+    'BatchTransaction',
     'Estatus',
    
     //'Action'
@@ -59,12 +66,15 @@ export class BillDteComponent implements OnInit {
     params.customerguid = customerguid;
     params.status = 'E';
 
-    this.dteService.GetAllBillByCompany(params).subscribe((result: BillDTE[]) => {
+    this.dteService.GetAllBillByCompany(params).subscribe((result: any) => {
       //ELEMENT_DATA_BILL;
       this.spinnerValue = 60;
       if (result) {
         this.spinnerValue = 100;
-        this.dataSource = result;
+        //this.dataSource = result;
+        this.dataSource = new MatTableDataSource<BillDTE[]>(result);
+        this.dataSource.paginator = this.paginator;
+
         this.showSpinner = false;
        
       }

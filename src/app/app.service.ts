@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 )
 
 export class ApiService {
-    ApiURL = 'http://localhost:3000';
-   // ApiURL = 'https://dte-backend-e894411e55f9.herokuapp.com'; //PROD
+    //ApiURL = 'http://localhost:3000';
+    ApiURL = 'https://dte-backend-e894411e55f9.herokuapp.com'; //PROD
     constructor(private http: HttpClient) { }
 }
