@@ -13,11 +13,12 @@ import {
   FilePreviewModel,
 } from 'ngx-awesome-uploader';
 import { DteService } from './dte.service';
-import { Customer } from './model/Entities';
+ 
+import { Router } from '@angular/router';
 
 export class DemoFilePickerAdapter extends FilePickerAdapter {
 
-  constructor(private http: HttpClient, private dteService: DteService) {
+  constructor(private http: HttpClient, private dteService: DteService, private router: Router) {
     super();
   }
 
@@ -46,8 +47,14 @@ export class DemoFilePickerAdapter extends FilePickerAdapter {
             progress: uploadProgress,
           };
         } else {
-          return undefined;
-        }
+          //return undefined;          
+          const responseFromBackend = "Ok";
+          return {
+            body: responseFromBackend,
+            status: UploadStatus.UPLOADED,
+          };
+        };
+       
       }),
       catchError((er) => {
         //console.log(er);

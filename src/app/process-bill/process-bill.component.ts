@@ -19,7 +19,7 @@ interface Food {
 })
 export class ProcessBillComponent {
   constructor(private http: HttpClient, private dteService: DteService,  private router: Router) { }
-  public adapter = new DemoFilePickerAdapter(this.http, this.dteService);
+  public adapter = new DemoFilePickerAdapter(this.http, this.dteService,this.router);
 
   public ngOnInit(): void { }
 
