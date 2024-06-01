@@ -33,7 +33,7 @@ export module SubmiteDTE {
         public passwordFirmardocumento: string;
         public userAPI: string;
         public status: string;
-        public NumeroControl: string;
+        public NumeroControl?: string;
         constructor() {
             this.customerguid='';
             this.companynit = '';
