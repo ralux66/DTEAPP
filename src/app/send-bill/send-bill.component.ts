@@ -74,7 +74,7 @@ export class SendBillComponent implements OnInit {
            return result;
          });
     */
-    this.dteService.SubmiteAllDTE(submit_params).subscribe((result: any) => {
+    this.dteService.SubmitDTE(submit_params).subscribe((result: any) => {
       if (result) {
         this.spinnerValue = 80;
         this.showSpinner = false;
