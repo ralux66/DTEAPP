@@ -24,7 +24,7 @@ export class ProcessBillComponent {
   public ngOnInit(): void { }
 
   public uploadSuccess(event: any): void {
-    console.log(event);
+    //console.log(event);
     this.router.navigate(['/send-bill']);
   }
 

@@ -1,10 +1,14 @@
 <mat-card class="title_center">
   <mat-card-title>Historico Facturas</mat-card-title>
 </mat-card>
-
+<mat-divider></mat-divider>
 <mat-card>
   <mat-card-content>
     <mat-spinner *ngIf="showSpinner" value="spinnerValue" strokeWidth="3" [diameter]="40"></mat-spinner>
+    <button style="float: right;" (click)="GetAllBillByCompany()" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+      <mat-icon>rotate_left</mat-icon>
+    </button>
+   
     <mat-paginator [pageSizeOptions]="[10,30, 60, 90]" showFirstLastButtons
       aria-label="Select page of periodic elements">
     </mat-paginator>

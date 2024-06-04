@@ -45,11 +45,19 @@ export class SendBillComponent implements OnInit {
   }
 
   GetAllPendinBill() {
+    this.showSpinner = true;
+    this.spinnerValue = 30;
     let bill_params: DTE.Param = new DTE.Param();
     bill_params.customerguid = sessionStorage.getItem('customerguid')?.toString();;
     bill_params.status = 'P';
     this.dteService.GetAllBillPending(bill_params).subscribe((result: BillDTE[]) => {
-      this.dataSource = result;
+      this.spinnerValue = 60;
+      if (result) {
+        this.spinnerValue = 100;
+        this.dataSource = result;
+        this.showSpinner = false;
+      }
+    
     });
   }
 
@@ -156,6 +164,11 @@ export class SendBillComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
     });
+  }
+
+  ReloadGrid(){
+    this.router.navigate(['/send-bill']);
+     
   }
 
 }

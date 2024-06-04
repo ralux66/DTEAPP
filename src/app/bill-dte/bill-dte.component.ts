@@ -14,17 +14,19 @@ import { MatTableDataSource } from '@angular/material/table';
   //imports: [MatTableModule],
 
 })
+
+
 export class BillDteComponent implements OnInit {
   ListDteBill: BillDTE[];
   //dataSourceOne : BillDTE[] =[] ;
   dataSource: any; //BillDTE[];
   showSpinner: boolean = false;
   spinnerValue: number = 0;
-   
+
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  
+
   constructor(private dteService: DteService) {
     this.ListDteBill = [];
     this.dataSource = [];
@@ -52,13 +54,17 @@ export class BillDteComponent implements OnInit {
     'SubmitDte',
     'BatchTransaction',
     'Estatus',
-   
+
     //'Action'
   ];
   //this.dataSourceOne = ELEMENT_DATA;
   //dataSourceOne = ELEMENT_DATA;
 
   ngOnInit(): void {
+    this.GetAllBillByCompany();
+  }
+
+  GetAllBillByCompany() {
     this.showSpinner = true;
     this.spinnerValue = 30;
     const customerguid = sessionStorage.getItem('customerguid')?.toString();
@@ -76,9 +82,10 @@ export class BillDteComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
 
         this.showSpinner = false;
-       
+
       }
     });
+
   }
 }
 
