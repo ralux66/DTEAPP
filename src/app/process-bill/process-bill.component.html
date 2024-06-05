@@ -3,11 +3,13 @@
 </mat-card>
 <mat-divider></mat-divider>
 <section>
-  <mat-card class="file-input-alter">
+  <mat-card>
     <mat-card-content>
-      <ngx-awesome-uploader [adapter]="adapter" [enableCropper]="true" [fileMaxSize]="200"
-        (uploadSuccess)="uploadSuccess($event)" (validationError)="onValidationError($event)">
-      </ngx-awesome-uploader>
+      <section class="center">
+        <ngx-awesome-uploader [adapter]="adapter" [enableCropper]="true" [fileMaxSize]="200"
+          (uploadSuccess)="uploadSuccess($event)" (validationError)="onValidationError($event)">
+        </ngx-awesome-uploader>
+      </section>
     </mat-card-content>
   </mat-card>
 </section>
