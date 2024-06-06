@@ -54,11 +54,11 @@ export class LoginComponent {
           this.customerServices.GetCustomerByCompanyguid({ customerguid: data.customerguid }).subscribe(
             (customer: any) => {
               if (customer) {
-                this.dataSave(data,  customer[0]);
+                this.dataSave(data, customer[0]);
                 this.router.navigate(['/dte-bill']);
               }
             }
-          );        
+          );
         } else {
           this.errorMessage = 'Usuario o password invalidos';
         }
@@ -72,16 +72,17 @@ export class LoginComponent {
   };
 
   dataSave(user: User, customer: Customer) {
-    
+
     sessionStorage.setItem('customerguid', customer.customerguid);
     sessionStorage.setItem('customer_nit', customer.nit);
     sessionStorage.setItem('customer_nombre', customer.nombre);
-    
-  
-   
+
+    sessionStorage.setItem('userapi', customer.userapi); // '94501110101012';
+    sessionStorage.setItem('passwordauth', customer.passwordauth); //'SpiritAirline@2023';
+    sessionStorage.setItem('passwordfirmardocumento', customer.passwordfirmardocumento);  //'impuestos2016';
+
     sessionStorage.setItem('userguid', user.userguid);
     sessionStorage.setItem('usercodigo', user.codigo);
- 
     sessionStorage.setItem('usernombre', user.nombre);
   }
   deleteAll() {

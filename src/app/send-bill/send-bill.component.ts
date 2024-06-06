@@ -36,7 +36,7 @@ export class SendBillComponent implements OnInit {
   clickedRows = new Set<BillDTE>();
   showSpinner: boolean = false;
   spinnerValue: number = 0;
-  constructor(private dteService: DteService, public dialog: MatDialog,private router: Router) {
+  constructor(private dteService: DteService, public dialog: MatDialog, private router: Router) {
   };
 
 
@@ -57,7 +57,7 @@ export class SendBillComponent implements OnInit {
         this.dataSource = result;
         this.showSpinner = false;
       }
-    
+
     });
   }
 
@@ -69,9 +69,9 @@ export class SendBillComponent implements OnInit {
     //submit_params.companynit = '94501110101012';
     submit_params.companynit = sessionStorage.getItem('customer_nit')?.toString();
     submit_params.customerguid = sessionStorage.getItem('customerguid')?.toString();
-    submit_params.userAPI = '94501110101012';
-    submit_params.passwordAuth = 'SpiritAirline@2023';
-    submit_params.passwordFirmardocumento = 'impuestos2016';
+    submit_params.userapi = sessionStorage.getItem('userapi')?.toString(); // '94501110101012';
+    submit_params.passwordauth = sessionStorage.getItem('passwordauth')?.toString(); //'SpiritAirline@2023';
+    submit_params.passwordfirmardocumento = sessionStorage.getItem('passwordfirmardocumento')?.toString();  //'impuestos2016';
     submit_params.status = 'P';
     submit_params.NumeroControl = element.NumeroControl;
 
@@ -121,9 +121,9 @@ export class SendBillComponent implements OnInit {
     submit_params = new SubmiteDTE.Param();
     submit_params.companynit = sessionStorage.getItem('customer_nit')?.toString();
     submit_params.customerguid = sessionStorage.getItem('customerguid')?.toString();
-    submit_params.userAPI = '94501110101012';
-    submit_params.passwordAuth = 'SpiritAirline@2023';
-    submit_params.passwordFirmardocumento = 'impuestos2016';
+    submit_params.userapi = sessionStorage.getItem('userapi')?.toString(); // '94501110101012';
+    submit_params.passwordauth = sessionStorage.getItem('passwordauth')?.toString(); //'SpiritAirline@2023';
+    submit_params.passwordfirmardocumento = sessionStorage.getItem('passwordfirmardocumento')?.toString();  //'impuestos2016';
     submit_params.status = 'P';
     //submit_params.NumeroControl = element.NumeroControl;
 
@@ -166,9 +166,9 @@ export class SendBillComponent implements OnInit {
     });
   }
 
-  ReloadGrid(){
+  ReloadGrid() {
     this.router.navigate(['/send-bill']);
-     
+
   }
 
 }

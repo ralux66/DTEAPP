@@ -27,19 +27,22 @@ export class SubmiteDTE {
 
 export module SubmiteDTE {
     export class Param {
-        public customerguid?:string;
+        public customerguid?: string;
         public companynit?: string;
-        public passwordAuth: string;
-        public passwordFirmardocumento: string;
-        public userAPI: string;
+        
+        public userapi?: string;
+        public passwordauth?: string;
+        public passwordfirmardocumento?: string;
+
         public status: string;
         public NumeroControl?: string;
+
         constructor() {
-            this.customerguid='';
+            this.customerguid = '';
             this.companynit = '';
-            this.userAPI = '';
-            this.passwordAuth = '';
-            this.passwordFirmardocumento = '';
+            this.userapi = '';
+            this.passwordauth = '';
+            this.passwordfirmardocumento = '';
             this.status = '';
             this.NumeroControl = '';
         }
@@ -92,8 +95,8 @@ export class BillDTE {
         this.CurrencyBase = '';
         this.SV = 0;
         this.Status = '';
-        this.SubmitDte= new Date();
-        this.BatchTransaction='';
+        this.SubmitDte = new Date();
+        this.BatchTransaction = '';
 
     }
 
@@ -182,7 +185,11 @@ export class Customer {
     public codEstable: string;
     public codPuntoVentaMH: string;
     public codPuntoVenta: string;
-     
+    //add
+
+    public userapi: string;
+    public passwordauth: string;
+    public passwordfirmardocumento: string;
     constructor(
         customerguid: string,
         nombre: string,
@@ -202,7 +209,9 @@ export class Customer {
         codEstable: string,
         codPuntoVentaMH: string,
         codPuntoVenta: string,
-       
+        userapi: string,
+        passwordauth: string,
+        passwordfirmardocumento: string,
     ) {
         this.customerguid = customerguid;
         this.nombre = nombre;
@@ -222,13 +231,16 @@ export class Customer {
         this.codEstable = codEstable;
         this.codPuntoVentaMH = codPuntoVentaMH;
         this.codPuntoVenta = codPuntoVenta;
-         
+        this.userapi = userapi;
+        this.passwordauth = passwordauth;
+        this.passwordfirmardocumento = passwordfirmardocumento;
+
     }
 }
 
 export module Customer {
     export class Param {
-        public customerguid?: string;        
+        public customerguid?: string;
     }
 }
 
