@@ -1,3 +1,4 @@
+import { Hasher } from "js-md5";
 
 export class DTE {
     public CompanyID: number;
@@ -162,7 +163,10 @@ export class User {
 export module User {
     export class Param {
         public username?: string;
+       
         public password?: string;
+       
+
     }
 }
 

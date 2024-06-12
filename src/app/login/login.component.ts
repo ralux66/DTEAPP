@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { CustomerService } from '../customer.service';
 import { Customer, User } from '../model/Entities';
+import { md5 } from 'js-md5';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent {
 
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required, Validators.minLength(6)]);
-
+ // user_params: User.Param
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +32,8 @@ export class LoginComponent {
     private customerServices: CustomerService,
     private router: Router
   ) {
+    //this.user_params = new User.Param();
+
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -45,12 +48,15 @@ export class LoginComponent {
     }
 
     this.loading = true;
+
     const user_params: User.Param = this.loginForm.value;
+    user_params.password = md5(user_params.password ?? '');
+    //user_params.username = md5(user_params.username ?? '');
 
     this.loginService.getUserByPassword(user_params).subscribe(
       (data: User) => {
-        // Manejar la respuesta del API
-        if (data) {
+        // Manejar la respuesta del API        
+        if (data && data.userguid) {
           this.customerServices.GetCustomerByCompanyguid({ customerguid: data.customerguid }).subscribe(
             (customer: any) => {
               if (customer) {
