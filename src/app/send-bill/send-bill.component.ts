@@ -61,7 +61,7 @@ export class SendBillComponent implements OnInit {
     });
   }
 
-  SubmiteDTE(element: BillDTE) {
+  SubmiteDTE(element: string) {
     this.showSpinner = true;
     this.spinnerValue = 30;
     let submit_params: SubmiteDTE.Param;
@@ -73,15 +73,8 @@ export class SendBillComponent implements OnInit {
     submit_params.passwordauth = sessionStorage.getItem('passwordauth')?.toString(); //'SpiritAirline@2023';
     submit_params.passwordfirmardocumento = sessionStorage.getItem('passwordfirmardocumento')?.toString();  //'impuestos2016';
     submit_params.status = 'P';
-    submit_params.NumeroControl = element.NumeroControl;
+    submit_params.NumeroControl = element;
 
-
-    /*    this.dteService.SubmitDTE(submit_params).subscribe(
-         (result: any) => {
-           this.showSpinner = true;
-           return result;
-         });
-    */
     this.dteService.SubmitDTE(submit_params).subscribe((result: any) => {
       if (result) {
         this.spinnerValue = 80;
@@ -94,27 +87,11 @@ export class SendBillComponent implements OnInit {
         this.openDialog('0ms', '0ms');
       }
     });
-    /* this.dteService.SubmitDTE(submit_params).subscribe({
 
-      next: (v) => { this.spinnerValue = 60; },
-      error: (e) => {
-        this.spinnerValue = 100;
-        this.showSpinner = false;
-        this.openDialog('0ms', '0ms');
-        this.GetAllPendinBill();
-
-      },
-      complete: () => {
-        this.spinnerValue = 100;
-        this.showSpinner = false;
-        this.openDialog('0ms', '0ms');
-        this.GetAllPendinBill();
-      }
-    }); */
   }
 
 
-  SubmiteAllDTE() {
+  SubmiteAllDTE(element: string) {
 
     this.spinnerValue = 40;
     let submit_params: SubmiteDTE.Param;
@@ -125,15 +102,8 @@ export class SendBillComponent implements OnInit {
     submit_params.passwordauth = sessionStorage.getItem('passwordauth')?.toString(); //'SpiritAirline@2023';
     submit_params.passwordfirmardocumento = sessionStorage.getItem('passwordfirmardocumento')?.toString();  //'impuestos2016';
     submit_params.status = 'P';
-    //submit_params.NumeroControl = element.NumeroControl;
+    submit_params.NumeroControl = element != 'null' ? element : '';
 
-
-    /*    this.dteService.SubmitDTE(submit_params).subscribe(
-         (result: any) => {
-           this.showSpinner = true;
-           return result;
-         });
-    */
     this.dteService.SubmiteAllDTE(submit_params).subscribe((result: any) => {
       if (result) {
         this.spinnerValue = 80;

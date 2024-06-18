@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { DteService } from '../dte.service';
-import { BillDTE, DTE } from '../model/Entities';
+import { BillDTE, DTE, SubmiteDTE } from '../model/Entities';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-bill-dte',
@@ -27,10 +28,11 @@ export class BillDteComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
 
-  constructor(private dteService: DteService) {
+  constructor(private dteService: DteService, public dialog: MatDialog, private router: Router) {
     this.ListDteBill = [];
     this.dataSource = [];
     this.paginator;
+
   };
 
   /* displayedColumns: string[] = ['customerguid', 'NumeroControl',
@@ -54,8 +56,7 @@ export class BillDteComponent implements OnInit {
     'SubmitDte',
     'BatchTransaction',
     'Estatus',
-
-    //'Action'
+    'Action'
   ];
   //this.dataSourceOne = ELEMENT_DATA;
   //dataSourceOne = ELEMENT_DATA;
@@ -87,46 +88,51 @@ export class BillDteComponent implements OnInit {
     });
 
   }
+
+  AnularFactura(element: BillDTE) {
+    this.showSpinner = true;
+    this.spinnerValue = 30;
+    let submit_params: SubmiteDTE.Param;
+    submit_params = new SubmiteDTE.Param();
+    //submit_params.companynit = '94501110101012';
+    submit_params.companynit = sessionStorage.getItem('customer_nit')?.toString();
+    submit_params.customerguid = sessionStorage.getItem('customerguid')?.toString();
+    submit_params.userapi = sessionStorage.getItem('userapi')?.toString(); // '94501110101012';
+    submit_params.passwordauth = sessionStorage.getItem('passwordauth')?.toString(); //'SpiritAirline@2023';
+    submit_params.passwordfirmardocumento = sessionStorage.getItem('passwordfirmardocumento')?.toString();  //'impuestos2016';
+    submit_params.status = 'E';
+    submit_params.NumeroControl = element.NumeroControl;
+
+    this.dteService.Anulardte(submit_params).subscribe((result: any) => {
+      if (result) {
+        this.spinnerValue = 80;
+        this.showSpinner = false;
+        this.openDialog('0ms', '0ms');
+        this.router.navigate(['/dte-bill']);
+        //this.GetAllPendinBill();
+      } else {
+        this.showSpinner = false;
+        this.openDialog('0ms', '0ms');
+      }
+    });
+
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(DialogAnimationsExampleDialog, {
+      width: '500px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
 }
 
-
-export interface _iBillDTE {
-  customerguid: string;
-  //add
-  NumeroControl: string; //"DTE-01-02075433-000000000000001"
-  CodigoGeneracion: string; //"4B02E281-8EA3-48D6-7704-0E0014D42229"
-  //end
-  RecLoc: string;
-  SegSeqNbr: number;
-  NbrOfPax: number;
-  ArcIata: string;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  BookingDate: Date;
-  FlightDate: Date;
-  SegmentOrigin: string;
-  SegmentDest: string;
-  Base: number;
-  CurrencyBase: string;
-  SV: number;
-  Status: string;
+@Component({
+  selector: 'dialog-templay',
+  templateUrl: '../Utility/dialog-templay.html',
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule],
+})
+export class DialogAnimationsExampleDialog {
+  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) { }
 }
-
-
-//let ELEMENT_DATA: BillDTE[] = [];
-//const ELEMENT_DATA: BillDTE[] =  ListDteBill;
-
-
-/* const ELEMENT_DATA: BillDTE[] = [
-   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'}, 
-]; */

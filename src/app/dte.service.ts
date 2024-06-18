@@ -51,4 +51,9 @@ export class DteService {
     SubmiteAllDTE(inputValue: SubmiteDTE.Param): Observable<BillDTE[]> {
         return this.http.post<BillDTE[]>(`${this.ApiURL}/api/bill/submitAllbill`, inputValue);
     }
+
+    Anulardte(inputValue: SubmiteDTE.Param): Observable<BillDTE[]> {
+        return this.http.post<BillDTE[]>(
+            `${this.ApiURL}/api/bill/anulardte`, inputValue);
+    }
 }

@@ -30,13 +30,13 @@ export module SubmiteDTE {
     export class Param {
         public customerguid?: string;
         public companynit?: string;
-        
+
         public userapi?: string;
         public passwordauth?: string;
         public passwordfirmardocumento?: string;
 
         public status: string;
-        public NumeroControl?: string;
+        public NumeroControl: string;
 
         constructor() {
             this.customerguid = '';
@@ -163,9 +163,9 @@ export class User {
 export module User {
     export class Param {
         public username?: string;
-       
+
         public password?: string;
-       
+
 
     }
 }
