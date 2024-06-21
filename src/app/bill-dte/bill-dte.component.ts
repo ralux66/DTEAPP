@@ -23,7 +23,8 @@ export class BillDteComponent implements OnInit {
   dataSource: any; //BillDTE[];
   showSpinner: boolean = false;
   spinnerValue: number = 0;
-
+  searchconting: boolean = false;
+  searchanulados: boolean = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
@@ -71,7 +72,7 @@ export class BillDteComponent implements OnInit {
     const customerguid = sessionStorage.getItem('customerguid')?.toString();
     const params = new DTE.Param();
     params.customerguid = customerguid;
-    params.status = 'E';
+    params.status = this.searchconting ? 'C' : this.searchanulados ? 'N' : 'E';
 
     this.dteService.GetAllBillByCompany(params).subscribe((result: any) => {
       //ELEMENT_DATA_BILL;

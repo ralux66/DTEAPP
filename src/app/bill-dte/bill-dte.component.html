@@ -2,15 +2,25 @@
   <mat-card-title>Historico Facturas</mat-card-title>
 </mat-card>
 <mat-divider></mat-divider>
+
 <mat-card>
+  <div style="float: left;">
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <mat-slide-toggle [(ngModel)]="searchconting" (change)="GetAllBillByCompany()">Ver casos en
+          contingentes</mat-slide-toggle>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <mat-slide-toggle [(ngModel)]="searchanulados" (change)="GetAllBillByCompany()">Ver casos
+          anulados</mat-slide-toggle>
+      </mat-list-item>
+    </mat-list>
+  </div>
   <mat-card-content>
     <mat-spinner *ngIf="showSpinner" value="spinnerValue" strokeWidth="3" [diameter]="40"></mat-spinner>
-    <button style="float: right;" (click)="GetAllBillByCompany()" mat-fab color="primary"
-      aria-label="Example icon button with a delete icon">
+    <button (click)="GetAllBillByCompany()" style="float: inline-end;" mat-fab color="primary" aria-label="Actualizar">
       <mat-icon>rotate_left</mat-icon>
     </button>
-
-
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <!-- Name Column -->
       <ng-container matColumnDef="RecLoc">
@@ -71,7 +81,12 @@
       <ng-container matColumnDef="Estatus">
         <th mat-header-cell *matHeaderCellDef> Estatus </th>
         <td mat-cell *matCellDef="let element">
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="check_circle"></mat-icon>
+          <mat-icon *ngIf="searchanulados" aria-hidden="false" aria-label="Example home icon"
+            fontIcon="delete"></mat-icon>
+          <mat-icon *ngIf="searchconting" aria-hidden="false" aria-label="Example home icon"
+            fontIcon="schedule_send"></mat-icon>
+          <mat-icon *ngIf="!searchanulados && !searchconting" aria-hidden="false" aria-label="Example home icon"
+            fontIcon="check_circle"></mat-icon>
         </td>
       </ng-container>
 
@@ -79,7 +94,7 @@
       <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" (click)="AnularFactura(element)">
+          <button mat-raised-button color="primary" (click)="AnularFactura(element)" [disabled]="searchanulados">
             <mat-icon aria-hidden="false" aria-label="Anuarl" fontIcon="delete"></mat-icon>
             Anular
           </button>

@@ -56,4 +56,9 @@ export class DteService {
         return this.http.post<BillDTE[]>(
             `${this.ApiURL}/api/bill/anulardte`, inputValue);
     }
+
+    SubmiteContingencia(inputValue: SubmiteDTE.Param): Observable<BillDTE[]> {
+        return this.http.post<BillDTE[]>(
+            `${this.ApiURL}/api/bill/contingencia`, inputValue);
+    }
 }
