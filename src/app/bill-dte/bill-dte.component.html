@@ -3,20 +3,22 @@
 </mat-card>
 <mat-divider></mat-divider>
 
-<mat-card>
-  <div style="float: left;">
-    <mat-list role="list">
-      <mat-list-item role="listitem">
-        <mat-slide-toggle [(ngModel)]="searchconting" (change)="GetAllBillByCompany()">Ver casos en
-          contingentes</mat-slide-toggle>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <mat-slide-toggle [(ngModel)]="searchanulados" (change)="GetAllBillByCompany()">Ver casos
-          anulados</mat-slide-toggle>
-      </mat-list-item>
-    </mat-list>
-  </div>
+
+
+<mat-card> 
   <mat-card-content>
+    <section class="container">
+      <mat-list role="list">
+        <mat-list-item class="element" role="listitem">
+          <mat-slide-toggle [(ngModel)]="searchconting" (change)="GetAllBillByCompany()">Ver casos en
+            contingentes</mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item class="element" role="listitem">
+          <mat-slide-toggle [(ngModel)]="searchanulados" (change)="GetAllBillByCompany()">Ver casos
+            anulados</mat-slide-toggle>
+        </mat-list-item>
+      </mat-list>
+    </section>
     <mat-spinner *ngIf="showSpinner" value="spinnerValue" strokeWidth="3" [diameter]="40"></mat-spinner>
     <button (click)="GetAllBillByCompany()" style="float: inline-end;" mat-fab color="primary" aria-label="Actualizar">
       <mat-icon>rotate_left</mat-icon>

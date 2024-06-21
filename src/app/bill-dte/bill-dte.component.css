@@ -22,3 +22,15 @@
   .demo-row-is-clicked {
     font-weight: bold;
   }
+
+
+  .element {
+    position: relative;
+    left: 0; /* Alinea los elementos a la izquierda */
+    margin-right: 10px; /* Espacio entre los elementos si es necesario */
+  }
+
+  .container {
+    display: flex;
+    justify-content: flex-start; /* Alinea los elementos a la izquierda */
+  }
