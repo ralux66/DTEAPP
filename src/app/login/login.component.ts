@@ -94,5 +94,4 @@ export class LoginComponent {
   deleteAll() {
     sessionStorage.clear();
   }
-
 } 

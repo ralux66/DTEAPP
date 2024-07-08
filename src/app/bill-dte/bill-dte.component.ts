@@ -87,7 +87,6 @@ export class BillDteComponent implements OnInit {
 
       }
     });
-
   }
 
   AnularFactura(element: BillDTE) {

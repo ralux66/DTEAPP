@@ -2,14 +2,14 @@
     <button (click)="drawer.toggle()" mat-icon-button>
         <mat-icon>menu</mat-icon>
     </button>
-    <span>DTE TRANSMISION MH</span> 
+    <span>DTE TRANSMISION MH</span>
     <!-- <br>
     <span id="companyName">{{company_name}}</span>
     <br>
     <span id="companyNit">{{company_nit}}</span> -->
 
     <span class="example-spacer"></span>
- 
+
 
     <button [matMenuTriggerFor]="lvl1master" mat-button>
         <mat-icon aria-hidden="false" aria-label="Administrar cuemta" fontIcon="shield_person"></mat-icon>
@@ -20,7 +20,7 @@
         Usuario
     </button> -->
     <button onclick="deleteSession()" routerLink="" mat-button>
-        <mat-icon aria-hidden="false" aria-label="Salir de la sesion"  fontIcon="logout"></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Salir de la sesion" fontIcon="logout"></mat-icon>
         Cerrar Sesion
     </button>
     <mat-menu #lvl1master="matMenu">
@@ -72,7 +72,7 @@
     <mat-drawer #drawer opened="false" mode="over" position="start">
         <mat-nav-list>
             <mat-list-item>
-                <button routerLink="proces-bill" mat-button>
+                <button routerLink="proces-bill" routerLinkActive="active" mat-button>
                     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="memory"></mat-icon>
                     Cargar Facturas
                 </button>
@@ -84,17 +84,17 @@
                 </button>
             </mat-list-item>
             <mat-list-item>
-                <button routerLink="dte-bill" routerLinkActive="active" ariaCurrentWhenActive="page" mat-button>
+                <button routerLink="dte-bill"  ariaCurrentWhenActive="page" mat-button>
                     <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="done_all"></mat-icon>
                     Historico
                 </button>
             </mat-list-item>
-          <!--   <mat-list-item>
-                <button routerLink="dte-bill" routerLinkActive="active" ariaCurrentWhenActive="page" mat-button>
-                    <mat-icon aria-hidden="false" aria-label="Anulados" fontIcon="delete_sweep"></mat-icon>
-                    Facturas Anuladas
+            <mat-list-item>
+                <button routerLink="report-dte"  ariaCurrentWhenActive="page" mat-button>
+                    <mat-icon aria-hidden="false" aria-label="Anulados" fontIcon="summarize"></mat-icon>
+                    Report DTE
                 </button>
-            </mat-list-item> -->
+            </mat-list-item>
             <!-- <mat-list-item>
                 <button routerLink="MenuTest" mat-button><mat-icon>table</mat-icon></button>
             </mat-list-item>

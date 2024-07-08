@@ -34,7 +34,8 @@ import { MatTableModule } from '@angular/material/table';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatGridListModule} from '@angular/material/grid-list';
-
+import { ReportDteComponent } from './report-dte/report-dte.component';
+ 
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     LoginComponent,
     UserComponent,
     CustomerComponent,
+    ReportDteComponent,
 
   ],
   imports: [
@@ -69,7 +71,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatTableModule,
     MatSlideToggleModule,
     MatChipsModule,
-    MatGridListModule
+    MatGridListModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

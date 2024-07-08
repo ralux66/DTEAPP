@@ -10,6 +10,7 @@ import { LogCaseComponent } from './log-case/log-case.component';
 import { LoginComponent } from './login/login.component';
 import { CustomerComponent } from './customer/customer.component';
 import { UserComponent } from './user/user.component';
+import { ReportDteComponent } from './report-dte/report-dte.component';
 
 const routes: Routes = [
   //
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'customer', component: CustomerComponent },
   { path: 'user', component: UserComponent },
+  { path: 'report-dte', component: ReportDteComponent },
   // { path: '**', component: MainMenuBarComponent},
   //{ path: '', component: AppComponent},
 ];
