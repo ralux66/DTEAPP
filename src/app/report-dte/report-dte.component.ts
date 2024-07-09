@@ -18,11 +18,12 @@ export interface ReportOpt {
   styleUrls: ['./report-dte.component.css']
 })
 export class ReportDteComponent implements OnInit {
-  dataSource!: any; //BillDTE[]; 
+  dataSource!: any; //BillDTE[];
+  dataSourceFilter:any[]=[]; 
   showSpinner: boolean = false;
-  startDate!: Date;
-  endDate!: Date;
-  fileName:string;
+  startDate!: Date | null;
+  endDate!: Date | null;
+  fileName: string;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   displayedColumns: string[] = [
     "RecLoc",
@@ -46,10 +47,10 @@ export class ReportDteComponent implements OnInit {
   ];
 
   constructor(private dteService: DteService) {
-    let fechaGeneracion : number = Date.now();
-    this.fileName = 
-    sessionStorage.getItem('customer_nit')!=null ?
-    sessionStorage.getItem('customer_nit')?.trim().trimStart().trimEnd()+"_"+fechaGeneracion.toString() : "";
+    let fechaGeneracion: Date = new Date();
+    this.fileName =
+      sessionStorage.getItem('customer_nit') != null ?
+        sessionStorage.getItem('customer_nit')?.trim().trimStart().trimEnd() + "_" +fechaGeneracion.getTime() : "";
   }
 
   ngOnInit(): void {
@@ -58,48 +59,60 @@ export class ReportDteComponent implements OnInit {
   }
 
   GetAllBillByCompany(opt: string) {
+    this.showSpinner=true;
     const customerguid = sessionStorage.getItem('customerguid')?.toString();
     const params = new DTE.Param();
     params.customerguid = customerguid;
     params.status = opt;
 
-    this.dteService.GetAllBillByCompany(params).subscribe((result: any) => {
+    this.dteService.GetAllBillByCompany(params).subscribe((result: any) => {      
       if (result) {
+        this.dataSourceFilter = result;
         this.dataSource = new MatTableDataSource<BillDTE[]>(result);
-        this.dataSource.paginator = this.paginator;
-        this.showSpinner = false;
+        this.dataSource.paginator = this.paginator;        
       }
+      this.showSpinner = false;
     });
   }
+  
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  applyRangDate() {   
-    this.dataSource =
-      this.dataSource.filteredData.filter((x: { SubmitDte: Date; }) => {
-        let submitDate: Date = new Date(x.SubmitDte);
-        let startdate: Date = new Date(this.startDate);
-        let enddate: Date = new Date(this.endDate);
+  applyRangDate() {
+    if (this.startDate != null && this.endDate != null) {
+      this.dataSourceFilter =
+        this.dataSource.filteredData.filter((x: { SubmitDte: Date; }) => {
+          let submitDate: Date = new Date(x.SubmitDte);
+          let startdate: Date = new Date(this.startDate ?? Date.now());
+          let enddate: Date = new Date(this.endDate ?? Date.now());
 
-        return submitDate >= startdate && submitDate <= enddate;
-      });
+          return submitDate >= startdate && submitDate <= enddate;
+        });
+    }
 
-    this.dataSource = new MatTableDataSource<BillDTE[]>(this.dataSource);
+    this.dataSource = new MatTableDataSource<BillDTE[]>(this.dataSourceFilter);
     this.dataSource.paginator = this.paginator;
   }
 
-  exportTable(){
-     /**passing table id**/
-     let data = document.getElementById('table-data');
-     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(data);
- 
-     /**Generate workbook and add the worksheet**/
-     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-     XLSX.utils.book_append_sheet(wb, ws, 'ReportFilter');
- 
-     /*save to file*/
-     XLSX.writeFile(wb, `ReportFilter_${this.fileName}.xlsx`);
+  resetAll() {
+    this.startDate = null;
+    this.endDate = null;
+    this.GetAllBillByCompany('E');
+  }
+
+  exportTable() {
+    /**passing table id**/
+    //let data = document.getElementById('table-data');
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSourceFilter);
+
+    /**Generate workbook and add the worksheet**/
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'ReportFilter');
+
+    /*save to file*/
+    XLSX.writeFile(wb, `ReportFilter_${this.fileName}.xlsx`);
   }
 }

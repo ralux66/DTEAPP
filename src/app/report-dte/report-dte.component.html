@@ -10,17 +10,16 @@
                     <mat-chip-option color="warn"
                         (selectionChange)="GetAllBillByCompany('C')">Contingencia</mat-chip-option>
                 </mat-chip-listbox>
-            </mat-grid-tile>         
+            </mat-grid-tile> 
            
             <mat-grid-tile>
                 <div class="example-button-row">
-                    <button mat-raised-button color="primary" (click)="exportTable()">
-                        <mat-icon>send_money</mat-icon>
-                        Exportar
+                    <button mat-raised-button color="primary" (click)="resetAll()">
+                        <mat-icon>restart_alt</mat-icon>
+                        Reset
                     </button>
                 </div>
             </mat-grid-tile>
-
             <mat-grid-tile>
                 <mat-form-field class="example-form-field">
                     <mat-label>Ingrese un rango de fecha</mat-label>
@@ -38,6 +37,14 @@
                         </mat-date-range-picker-actions>
                     </mat-date-range-picker>
                 </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="example-button-row">
+                    <button mat-raised-button color="primary" (click)="exportTable()">
+                        <mat-icon>download</mat-icon>
+                        Exportar
+                    </button>
+                </div>
             </mat-grid-tile>
         </mat-grid-list>
     </mat-card-content>
