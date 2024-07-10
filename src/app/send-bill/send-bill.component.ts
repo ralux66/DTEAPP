@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-//import { NgIf, NgFor } from '@angular/common';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { BillDTE, DTE, SubmiteDTE } from '../model/Entities';
 import { DteService } from '../dte.service';
 import { MatDialog, MatDialogRef, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface DialogData {
   animal: string;
@@ -24,7 +25,7 @@ export class SendBillComponent implements OnInit {
   name: string;
   sendcontingencia: boolean = false;
   searchconting: boolean = false;
-
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   displayedColumns: string[] = [
     "RecLoc",
     'Dte-Number',
@@ -46,7 +47,7 @@ export class SendBillComponent implements OnInit {
     //'Alter'
   ];
 
-  dataSource: BillDTE[] = []; //ELEMENT_DATA;
+  dataSource: any;  //BillDTE[] = []; //ELEMENT_DATA;
   clickedRows = new Set<BillDTE>();
   showSpinner: boolean = false;
   spinnerValue: number = 0;
@@ -66,11 +67,14 @@ export class SendBillComponent implements OnInit {
     let bill_params: DTE.Param = new DTE.Param();
     bill_params.customerguid = sessionStorage.getItem('customerguid')?.toString();;
     bill_params.status = this.searchconting ? 'C' : 'P';
-    this.dteService.GetAllBillPending(bill_params).subscribe((result: BillDTE[]) => {
+    this.dteService.GetAllBillPending(bill_params).subscribe((result: any) => {
       this.spinnerValue = 60;
       if (result) {
         this.spinnerValue = 100;
-        this.dataSource = result;
+       
+        this.dataSource = new MatTableDataSource<BillDTE[]>(result);
+        this.dataSource.paginator = this.paginator;
+
         this.showSpinner = false;
       }
 
