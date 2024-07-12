@@ -11,20 +11,25 @@
 
     <mat-grid-list cols="2" rowHeight="15:1">
       <mat-grid-tile>
-        <mat-slide-toggle [(ngModel)]="searchconting" (change)="GetAllBillByCompany()" style="margin-right: 8px;">Casos en
-          contingentes</mat-slide-toggle>        
+        <mat-slide-toggle [(ngModel)]="searchconting" (change)="GetAllBillByCompany()" style="margin-right: 8px;">Casos
+          en
+          contingentes</mat-slide-toggle>
         <mat-slide-toggle [(ngModel)]="searchanulados" (change)="GetAllBillByCompany()">Casos
           anulados</mat-slide-toggle>
       </mat-grid-tile>
       <mat-grid-tile style="align-items:  self-end;">
-        <button (click)="GetAllBillByCompany()" mat-icon-button aria-label="Recall">
+        <!--  <button (click)="GetAllBillByCompany()" mat-icon-button aria-label="Recall">
+          <mat-icon>rotate_left</mat-icon>
+        </button> -->
+        <button style="float: right;" (click)="GetAllBillByCompany()" mat-fab color="primary"
+          aria-label="Get all pending bill">
           <mat-icon>rotate_left</mat-icon>
         </button>
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-spinner *ngIf="showSpinner" value="spinnerValue" strokeWidth="3" [diameter]="40"></mat-spinner>
       </mat-grid-tile>
-     
+
     </mat-grid-list>
 
 

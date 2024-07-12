@@ -71,7 +71,7 @@ export class SendBillComponent implements OnInit {
       this.spinnerValue = 60;
       if (result) {
         this.spinnerValue = 100;
-       
+
         this.dataSource = new MatTableDataSource<BillDTE[]>(result);
         this.dataSource.paginator = this.paginator;
 
@@ -114,7 +114,8 @@ export class SendBillComponent implements OnInit {
     if (this.sendcontingencia) {
       this.SubmiteContingencia(element);
     } else {
-      this.spinnerValue = 40;
+      this.spinnerValue = 0;
+      this.showSpinner = true;
       let submit_params: SubmiteDTE.Param;
       submit_params = new SubmiteDTE.Param();
       submit_params.companynit = sessionStorage.getItem('customer_nit')?.toString();
@@ -125,15 +126,35 @@ export class SendBillComponent implements OnInit {
       submit_params.status = this.searchconting ? 'C' : 'P';
       submit_params.NumeroControl = element != 'null' ? element : '';
 
-      this.dteService.SubmiteAllDTE(submit_params).subscribe((result: any) => {
+      this.dteService.SubmiteAllDTE(submit_params).subscribe({
+        next: (result: any) => {
+          this.spinnerValue += 2;
+          //if (result) {            
+            //this.openDialog();
+            //this.router.navigate(['/dte-bill']);
+          //}
+          //console.log('Observable index: ' + this.spinnerValue);
+        },
+        error: err => console.error('Observable emitted an error: ' + err),
+        complete: () => { 
+          this.showSpinner = false; 
+          this.openDialog();
+
+          //this.router.navigate(['/dte-bill']); 
+        }
+      });
+
+     /*  this.dteService.SubmiteAllDTE(submit_params).subscribe((result: any) => {
         if (result) {
           this.spinnerValue = 80;
           this.showSpinner = false;
-          this.router.navigate(['/dte-bill']);
+          this.openDialog();
+          //this.router.navigate(['/dte-bill']);
         } else {
           this.showSpinner = false;
         }
-      });
+      }); */
+
     }
   }
 
@@ -162,12 +183,13 @@ export class SendBillComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      data: { name: this.name, animal: this.animal },
+      //data: { name: this.name, animal: this.animal },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+      //console.log('The dialog was closed');
+      //this.animal = result;
+      this.router.navigate(['/dte-bill']);
     });
   }
 
@@ -176,7 +198,7 @@ export class SendBillComponent implements OnInit {
   }
 
 }
-
+/* 
 @Component({
   selector: 'dialog-templay',
   templateUrl: '../Utility/dialog-templay.html',
@@ -186,7 +208,7 @@ export class SendBillComponent implements OnInit {
 export class DialogAnimationsExampleDialog {
   constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) { }
 }
-
+ */
 
 @Component({
   selector: 'dialog-overview-example-dialog',
