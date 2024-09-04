@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DteService } from '../dte.service';
-import { BillDTE, DTE, SubmiteDTE } from '../model/Entities';
+import { BillDTE, DTE, GeneratePDF, SubmiteDTE } from '../model/Entities';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -57,6 +57,7 @@ export class BillDteComponent implements OnInit {
     'SubmitDte',
     'BatchTransaction',
     'Estatus',
+    //'GenerarPDF',
     'Action'
   ];
   //this.dataSourceOne = ELEMENT_DATA;
@@ -116,6 +117,24 @@ export class BillDteComponent implements OnInit {
       }
     });
 
+  }
+
+  GeneratePDF(element: BillDTE) {
+    const objGeneratePDF: GeneratePDF = new GeneratePDF();
+    objGeneratePDF.customerguid = sessionStorage.getItem('customerguid')?.toString();
+    objGeneratePDF.NumeroControl = element.NumeroControl;
+    objGeneratePDF.receptorguid = '';
+
+    this.dteService.GeneratePDF(objGeneratePDF).subscribe(resultPDF => {
+      if (resultPDF) {
+        this.openDialog('0ms', '0ms');
+      }      
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {

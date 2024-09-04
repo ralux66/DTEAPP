@@ -135,7 +135,7 @@ export class SendBillComponent implements OnInit {
           //}
           //console.log('Observable index: ' + this.spinnerValue);
         },
-        error: err => console.error('Observable emitted an error: ' + err),
+        error: err => { console.error('Observable emitted an error: ' + err);  this.showSpinner = false; this.openDialog(); },
         complete: () => { 
           this.showSpinner = false; 
           this.openDialog();

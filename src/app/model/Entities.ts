@@ -50,6 +50,17 @@ export module SubmiteDTE {
     }
 }
 
+export class GeneratePDF {
+
+    public NumeroControl: string;
+    public customerguid?: string;
+    public receptorguid: string;
+    constructor() {
+        this.NumeroControl = '';
+        this.customerguid = '';
+        this.receptorguid = '';
+    }
+}
 
 
 

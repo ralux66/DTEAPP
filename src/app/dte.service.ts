@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
 import { ApiService } from "./app.service";
-import { BillDTE, Customer, DTE, SubmiteDTE } from "./model/Entities";
+import { BillDTE, Customer, DTE, GeneratePDF, SubmiteDTE } from "./model/Entities";
 import { Observable } from 'rxjs';
 
 
@@ -60,5 +60,10 @@ export class DteService {
     SubmiteContingencia(inputValue: SubmiteDTE.Param): Observable<BillDTE[]> {
         return this.http.post<BillDTE[]>(
             `${this.ApiURL}/api/bill/contingencia`, inputValue);
+    }
+
+    GeneratePDF(inputValue: GeneratePDF): Observable<string> {
+        return this.http.post<string>(
+            `${this.ApiURL}/api/bill/generateDteToPdf`, inputValue);
     }
 }
