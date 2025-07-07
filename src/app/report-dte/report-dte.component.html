@@ -1,123 +1,189 @@
 <mat-card>
-    <mat-card-content>
-        <mat-grid-list cols="2" rowHeight="10:1">
-            <mat-grid-tile>
-                <mat-chip-listbox aria-label="Opt selection">
-                    <mat-chip-option color="primary" (selectionChange)="GetAllBillByCompany('E')"
-                        selected>Emitidas</mat-chip-option>
-                    <mat-chip-option color="accent"
-                        (selectionChange)="GetAllBillByCompany('N')">Anuladas</mat-chip-option>
-                    <mat-chip-option color="warn"
-                        (selectionChange)="GetAllBillByCompany('C')">Contingencia</mat-chip-option>
-                </mat-chip-listbox>
-            </mat-grid-tile> 
-           
-            <mat-grid-tile>
-                <div class="example-button-row">
-                    <button mat-raised-button color="primary" (click)="resetAll()">
-                        <mat-icon>restart_alt</mat-icon>
-                        Reset
-                    </button>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <mat-form-field class="example-form-field">
-                    <mat-label>Ingrese un rango de fecha</mat-label>
-                    <mat-date-range-input [rangePicker]="rangePicker">
-                        <input matStartDate placeholder="Inicio" [(ngModel)]="startDate">
-                        <input matEndDate placeholder="Fin" [(ngModel)]="endDate">
-                    </mat-date-range-input>
-                    <!-- <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint> -->
-                    <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #rangePicker>
-                        <mat-date-range-picker-actions>
-                            <button mat-button matDateRangePickerCancel>Cancel</button>
-                            <button mat-raised-button color="primary" (click)="applyRangDate()"
-                                matDateRangePickerApply>Apply</button>
-                        </mat-date-range-picker-actions>
-                    </mat-date-range-picker>
-                </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="example-button-row">
-                    <button mat-raised-button color="primary" (click)="exportTable()">
-                        <mat-icon>download</mat-icon>
-                        Exportar
-                    </button>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list>
-    </mat-card-content>
+  <mat-card-title
+    style="
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+      padding: 8px 0;
+    "
+  >
+    📄 Reporte Histórico de Facturas
+  </mat-card-title>
+  <br />
+  <mat-card-content>
+    <!-- Filtros superiores -->
+    <div
+      fxLayout="row wrap"
+      fxLayoutGap="16px"
+      fxLayoutAlign="space-between center"
+      style="margin-bottom: 16px"
+    >
+      <!-- Chips de tipo de factura -->
+      <div fxLayout="row" fxLayoutGap="8px">
+        <mat-chip-listbox aria-label="Tipo de Factura">
+          <mat-chip-option
+            color="primary"
+            (selectionChange)="GetAllBillByCompany('E')"
+            selected
+          >
+            Emitidas
+          </mat-chip-option>
+          <mat-chip-option
+            color="accent"
+            (selectionChange)="GetAllBillByCompany('N')"
+          >
+            Anuladas
+          </mat-chip-option>
+          <mat-chip-option
+            color="warn"
+            (selectionChange)="GetAllBillByCompany('C')"
+          >
+            Contingencia
+          </mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+
+      <!-- Botones -->
+      <!-- Botones alineados a la derecha -->
+      <div
+        fxLayout="row"
+        fxLayoutGap="8px"
+        fxLayoutAlign="end center"
+        fxFlex.xs="100"
+        fxFlex.gt-xs="auto"
+      >
+        <button mat-raised-button color="primary" (click)="resetAll()">
+          <mat-icon>restart_alt</mat-icon>
+          Reset
+        </button>
+
+        <button mat-raised-button color="accent" (click)="exportTable()">
+          <mat-icon>download</mat-icon>
+          Exportar
+        </button>
+      </div>
+    </div>
+
+    <!-- Selector de rango de fecha -->
+    <div
+      fxLayout="row wrap"
+      fxLayoutAlign="start center"
+      style="margin-bottom: 16px"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Rango de fechas</mat-label>
+        <mat-date-range-input [rangePicker]="rangePicker">
+          <input matStartDate placeholder="Inicio" [(ngModel)]="startDate" />
+          <input matEndDate placeholder="Fin" [(ngModel)]="endDate" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="rangePicker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #rangePicker>
+          <mat-date-range-picker-actions>
+            <button mat-button matDateRangePickerCancel>Cancelar</button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="applyRangDate()"
+              matDateRangePickerApply
+            >
+              Aplicar
+            </button>
+          </mat-date-range-picker-actions>
+        </mat-date-range-picker>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
 </mat-card>
 
-
-
+<!-- Tabla -->
 <mat-card>
-    <mat-card-content>
-        <mat-spinner *ngIf="showSpinner" value="spinnerValue" strokeWidth="3" [diameter]="40"></mat-spinner>
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" id="table-data">
-            <!-- Name Column -->
-            <ng-container matColumnDef="RecLoc">
-                <th mat-header-cell *matHeaderCellDef>RecLoc</th>
-                <td mat-cell *matCellDef="let element">{{element.RecLoc}}</td>
-            </ng-container>
+  <mat-card-content>
+    <mat-spinner
+      *ngIf="showSpinner"
+      strokeWidth="3"
+      [diameter]="40"
+    ></mat-spinner>
 
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+      id="table-data"
+      style="width: 100%"
+    >
+      <!-- Columnas dinámicas -->
+      <ng-container matColumnDef="RecLoc">
+        <th mat-header-cell *matHeaderCellDef>RecLoc</th>
+        <td mat-cell *matCellDef="let element">{{ element.RecLoc }}</td>
+      </ng-container>
 
-            <ng-container matColumnDef="NumeroControl">
-                <th mat-header-cell *matHeaderCellDef>Numero Fact.</th>
-                <td mat-cell *matCellDef="let element">{{element.NumeroControl}}</td>
-            </ng-container>
+      <ng-container matColumnDef="NumeroControl">
+        <th mat-header-cell *matHeaderCellDef>N° Factura</th>
+        <td mat-cell *matCellDef="let element">{{ element.NumeroControl }}</td>
+      </ng-container>
 
-            <ng-container matColumnDef="CodigoGeneracion">
-                <th mat-header-cell *matHeaderCellDef>Codigo Generacion</th>
-                <td mat-cell *matCellDef="let element">{{element.CodigoGeneracion}}</td>
-            </ng-container>
+      <ng-container matColumnDef="CodigoGeneracion">
+        <th mat-header-cell *matHeaderCellDef>Código Generación</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.CodigoGeneracion }}
+        </td>
+      </ng-container>
 
+      <ng-container matColumnDef="FirstName">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.FirstName }}</td>
+      </ng-container>
 
+      <ng-container matColumnDef="LastName">
+        <th mat-header-cell *matHeaderCellDef>Apellido</th>
+        <td mat-cell *matCellDef="let element">{{ element.LastName }}</td>
+      </ng-container>
 
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="FirstName">
-                <th mat-header-cell *matHeaderCellDef>FirstName</th>
-                <td mat-cell *matCellDef="let element">{{element.FirstName}}</td>
-            </ng-container>
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="LastName">
-                <th mat-header-cell *matHeaderCellDef>LastName</th>
-                <td mat-cell *matCellDef="let element">{{element.LastName}}</td>
-            </ng-container>
+      <ng-container matColumnDef="BookingDate">
+        <th mat-header-cell *matHeaderCellDef>Fecha Reserva</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.BookingDate | date }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="BookingDate">
-                <th mat-header-cell *matHeaderCellDef>BookingDate</th>
-                <td mat-cell *matCellDef="let element">{{element.BookingDate | date}}</td>
-            </ng-container>
+      <ng-container matColumnDef="Base">
+        <th mat-header-cell *matHeaderCellDef>Base</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Base | currency }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="Base">
-                <th mat-header-cell *matHeaderCellDef>Base</th>
-                <td mat-cell *matCellDef="let element">{{element.Base | currency}}</td>
-            </ng-container>
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="SV">
-                <th mat-header-cell *matHeaderCellDef>Iva</th>
-                <td mat-cell *matCellDef="let element">{{element.SV | currency}}</td>
-            </ng-container>
+      <ng-container matColumnDef="SV">
+        <th mat-header-cell *matHeaderCellDef>IVA</th>
+        <td mat-cell *matCellDef="let element">{{ element.SV | currency }}</td>
+      </ng-container>
 
+      <ng-container matColumnDef="BatchTransaction">
+        <th mat-header-cell *matHeaderCellDef>N° Lote</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.BatchTransaction }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="BatchTransaction">
-                <th mat-header-cell *matHeaderCellDef>Numero de lote</th>
-                <td mat-cell *matCellDef="let element">{{element.BatchTransaction }}</td>
-            </ng-container>
+      <ng-container matColumnDef="SubmitDte">
+        <th mat-header-cell *matHeaderCellDef>Fecha Envío</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.SubmitDte | date }}
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="SubmitDte">
-                <th mat-header-cell *matHeaderCellDef>Fecha de envio</th>
-                <td mat-cell *matCellDef="let element">{{element.SubmitDte | date }}</td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <mat-paginator [pageSizeOptions]="[10,30, 60, 90]" showFirstLastButtons
-            aria-label="Select page of periodic elements">
-        </mat-paginator>
-    </mat-card-content>
+      <!-- Filas -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <!-- Paginador -->
+    <mat-paginator
+      [pageSizeOptions]="[10, 30, 60, 90]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-card-content>
 </mat-card>
-
-

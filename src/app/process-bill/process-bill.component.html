@@ -1,15 +1,23 @@
 <mat-card class="title_center">
-  <mat-card-title>Cargar Factruas</mat-card-title>
+  <mat-card-title>Cargar Facturas</mat-card-title>
 </mat-card>
+
 <mat-divider></mat-divider>
-<section>
-  <mat-card>
+
+<section class="upload-section">
+  <mat-card class="upload-card">
+    <mat-card-title class="upload-title">Sube tus archivos aquí</mat-card-title>
     <mat-card-content>
-      <section class="center">
-        <ngx-awesome-uploader [adapter]="adapter" [enableCropper]="true" [fileMaxSize]="200"
-          (uploadSuccess)="uploadSuccess($event)" (validationError)="onValidationError($event)">
+      <div class="upload-container">
+        <ngx-awesome-uploader
+          [adapter]="adapter"
+          [enableCropper]="true"
+          [fileMaxSize]="200"
+          (uploadSuccess)="uploadSuccess($event)"
+          (validationError)="onValidationError($event)"
+        >
         </ngx-awesome-uploader>
-      </section>
+      </div>
     </mat-card-content>
   </mat-card>
 </section>

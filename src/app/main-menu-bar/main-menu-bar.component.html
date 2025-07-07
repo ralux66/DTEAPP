@@ -1,101 +1,98 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
-    <button (click)="drawer.toggle()" mat-icon-button>
-        <mat-icon>menu</mat-icon>
-    </button>
-    <span>DTE TRANSMISION MH</span>
-    <!-- <br>
-    <span id="companyName">{{company_name}}</span>
-    <br>
-    <span id="companyNit">{{company_nit}}</span> -->
+  <button (click)="drawer.toggle()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="toolbar-title">DTE TRANSMISION MH</span>
 
-    <span class="example-spacer"></span>
+  <span class="example-spacer"></span>
 
+  <!-- Sección de usuario y empresa -->
+  <div class="user-info">
+    <span class="user-name mat-subtitle-2">
+      {{ user_name }} ({{ company_nit }})
+    </span>
+    <span class="company-name mat-caption">
+      {{ company_name }}
+    </span>
+  </div>
 
-    <button [matMenuTriggerFor]="lvl1master" mat-button>
-        <mat-icon aria-hidden="false" aria-label="Administrar cuemta" fontIcon="shield_person"></mat-icon>
-        Admin
-    </button>
-    <!-- <button routerLink="" mat-button>
-        <mat-icon aria-hidden="false" aria-label="Usuario del sistema" fontIcon="account_circle"></mat-icon>
-        Usuario
-    </button> -->
-    <button onclick="deleteSession()" routerLink="" mat-button>
-        <mat-icon aria-hidden="false" aria-label="Salir de la sesion" fontIcon="logout"></mat-icon>
-        Cerrar Sesion
-    </button>
-    <mat-menu #lvl1master="matMenu">
-        <button [matMenuTriggerFor]="company" mat-menu-item>
-            <mat-icon aria-hidden="false" aria-label="Log system" fontIcon="discover_tune"></mat-icon>
-            Configurar</button>
-        <!--  <button [matMenuTriggerFor]="customer" mat-menu-item>Customer</button>
-        <button [matMenuTriggerFor]="product" mat-menu-item>Product</button> -->
-    </mat-menu>
-
-    <mat-menu #company="matMenu">
-        <button mat-menu-item routerLink="log-case">
-            <mat-icon aria-hidden="false" aria-label="Log system" fontIcon="logo_dev"></mat-icon>
-            Log
-        </button>
-        <button mat-menu-item>
-            <mat-icon aria-hidden="false" aria-label="Config Customer" fontIcon="settings"></mat-icon>
-            Compania</button>
-        <button mat-menu-item>
-            <mat-icon aria-hidden="false" aria-label="Config User" fontIcon="manage_accounts"></mat-icon>
-            Usuario</button>
-        <!-- <button mat-menu-item>Currency</button> -->
-    </mat-menu>
-    <!-- <mat-menu #customer="matMenu">
-        <button mat-menu-item>Type</button>
-        <button mat-menu-item>Tax</button>
-    </mat-menu>
-    <mat-menu #product="matMenu">
-        <button mat-menu-item>Category</button>
-        <button [matMenuTriggerFor]="variant" mat-menu-item>Variant</button>
-        <button mat-menu-item>UOM</button>
-    </mat-menu>
-
-    <mat-menu #variant="matMenu">
-        <button mat-menu-item>Color</button>
-        <button mat-menu-item>Size</button>
-    </mat-menu>
- -->
-    <!-- <button routerLink="ToolBar" mat-button>Input</button>
-    <button routerLink="autocomplete" mat-button>Autocomplete</button> -->
-    <!-- <a href="" mat-raised-button color="accent">Join Us</a> -->
-    <button (click)="badgevisibility()" mat-icon-button>
-        <mat-icon matBadgeColor="accent" [matBadgeHidden]="badgevisible" matBadge="15"
-            matBadgeSize="small">notifications</mat-icon>
-    </button>
+  <!-- Botones de usuario -->
+  <button [matMenuTriggerFor]="lvl1master" mat-button>
+    <mat-icon fontIcon="shield_person"></mat-icon>
+    Admin
+  </button>
+  <button onclick="deleteSession()" routerLink="" mat-button>
+    <mat-icon aria-hidden="false" fontIcon="logout"></mat-icon>
+    Cerrar Sesión
+  </button>
+  <button (click)="badgevisibility()" mat-icon-button>
+    <mat-icon
+      matBadgeColor="accent"
+      [matBadgeHidden]="badgevisible"
+      [matBadge]="matBadge"
+      matBadgeSize="small"
+      >notifications</mat-icon
+    >
+  </button>
 </mat-toolbar>
-
+<mat-menu #lvl1master="matMenu">
+  <button mat-menu-item>
+    <mat-icon fontIcon="manage_accounts"></mat-icon>
+    Usuario
+  </button>
+  <button mat-menu-item>
+    <mat-icon fontIcon="settings"></mat-icon>
+    Empresa
+  </button>
+  <button mat-menu-item routerLink="log-case">
+    <mat-icon fontIcon="logo_dev"></mat-icon>
+    Log del Sistema
+  </button>
+</mat-menu>
 <mat-drawer-container autosize>
-    <mat-drawer #drawer opened="false" mode="over" position="start">
-        <mat-nav-list>
-            <mat-list-item>
-                <button routerLink="proces-bill" routerLinkActive="active" mat-button>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="memory"></mat-icon>
-                    Cargar Facturas
-                </button>
-            </mat-list-item>
-            <mat-list-item>
-                <button routerLink="send-bill" mat-button>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="pending_actions"></mat-icon>
-                    Enviar Facturas
-                </button>
-            </mat-list-item>
-            <mat-list-item>
-                <button routerLink="dte-bill"  ariaCurrentWhenActive="page" mat-button>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="done_all"></mat-icon>
-                    Historico
-                </button>
-            </mat-list-item>
-            <mat-list-item>
-                <button routerLink="report-dte"  ariaCurrentWhenActive="page" mat-button>
-                    <mat-icon aria-hidden="false" aria-label="Anulados" fontIcon="summarize"></mat-icon>
-                    Report DTE
-                </button>
-            </mat-list-item>
-            <!-- <mat-list-item>
+  <mat-drawer #drawer opened="false" mode="over" position="start">
+    <mat-nav-list>
+      <mat-list-item>
+        <button routerLink="proces-bill" routerLinkActive="active" mat-button>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="memory"
+          ></mat-icon>
+          Cargar Facturas
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <button routerLink="send-bill" mat-button>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="pending_actions"
+          ></mat-icon>
+          Enviar Facturas
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <button routerLink="dte-bill" ariaCurrentWhenActive="page" mat-button>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="done_all"
+          ></mat-icon>
+          Historico
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <button routerLink="report-dte" ariaCurrentWhenActive="page" mat-button>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Anulados"
+            fontIcon="summarize"
+          ></mat-icon>
+          Report DTE
+        </button>
+      </mat-list-item>
+      <!-- <mat-list-item>
                 <button routerLink="MenuTest" mat-button><mat-icon>table</mat-icon></button>
             </mat-list-item>
             <mat-list-item>
@@ -107,13 +104,12 @@
             <mat-list-item>
                 <button mat-button><mat-icon>analytics</mat-icon> analytics</button>
             </mat-list-item> -->
-        </mat-nav-list>
-    </mat-drawer>
-    <mat-drawer-content>
-
-        <div style="text-align: center;min-height: 1024px;">
-            <router-outlet></router-outlet>
-            <!--  <router-outlet></router-outlet> -->
-        </div>
-    </mat-drawer-content>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="text-align: center; min-height: 1024px">
+      <router-outlet></router-outlet>
+      <!--  <router-outlet></router-outlet> -->
+    </div>
+  </mat-drawer-content>
 </mat-drawer-container>

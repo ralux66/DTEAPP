@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BillDTE, DTE } from '../model/Entities';
+import { DteService } from '../dte.service';
 
 @Component({
   selector: 'app-main-menu-bar',
@@ -12,11 +14,13 @@ export class MainMenuBarComponent implements OnInit {
   company_name?: string;
   company_nit?: string;
   user_name?: string;
-  constructor(private router: Router) {
+  badgevisible = false;
+  bill_params: DTE.Param = new DTE.Param();
+  matBadge: number = 0;
+  constructor(private router: Router, private dteService: DteService) {
     this.company_nit = '';
     this.company_name = '';
     this.user_name = '';
-    
   }
 
   ngOnInit(): void {
@@ -26,15 +30,29 @@ export class MainMenuBarComponent implements OnInit {
     this.company_nit = customernit;
     this.company_name = company_name;
     this.user_name = usuario_nombre;
-
+    this.GetAllPendinBill();
   }
-  badgevisible = false;
+
   badgevisibility() {
     this.badgevisible = true;
   }
 
-  deleteSession(){
+  deleteSession() {
     sessionStorage.clear();
     this.router.navigate(['/']);
+  }
+
+  GetAllPendinBill() {
+    this.bill_params.customerguid = sessionStorage
+      .getItem('customerguid')
+      ?.toString();
+    this.bill_params.status = 'P';
+    this.dteService
+      .GetAllBillPending(this.bill_params)
+      .subscribe((result: BillDTE[]) => {
+        if (result) {
+          this.matBadge = result.length;
+        }
+      });
   }
 }

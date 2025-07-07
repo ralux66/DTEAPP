@@ -1,148 +1,179 @@
+<!-- Título -->
 <mat-card>
-  <mat-card-title>Casos pendientes de enviar</mat-card-title>
+  <mat-card-title style="font-size: 20px; font-weight: 600; text-align: center">
+    🚀 Casos pendientes de enviar
+  </mat-card-title>
 </mat-card>
+
+<!-- Filtros y botones -->
 <mat-card>
   <mat-card-content>
-    <section>
-      <mat-slide-toggle [(ngModel)]="sendcontingencia">Envio contingencia</mat-slide-toggle>
-    </section>
-    <br>
-    <section>
-      <div class="example-button-row">
-        <button *ngIf="!sendcontingencia" mat-raised-button color="primary" (click)="SubmiteAllDTE('null')">
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="bolt"></mat-icon>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      fxLayoutGap="16px"
+      style="margin-bottom: 16px"
+    >
+      <!-- Toggle a la izquierda -->
+      <mat-slide-toggle [(ngModel)]="sendcontingencia">
+        Envío contingencia
+      </mat-slide-toggle>
+
+      <!-- Botones alineados a la derecha con separación -->
+      <div fxLayout="row" fxLayoutGap="16px">
+        <!-- Enviar Todos -->
+        <button
+          *ngIf="!sendcontingencia"
+          mat-raised-button
+          color="primary"
+          (click)="SubmiteAllDTE('null')"
+        >
+          <mat-icon fontIcon="bolt"></mat-icon>
+          Enviar Todos
+        </button>
+        <button
+          *ngIf="sendcontingencia"
+          mat-raised-button
+          color="accent"
+          (click)="SubmiteAllDTE('null')"
+        >
+          <mat-icon fontIcon="bolt"></mat-icon>
           Enviar Todos
         </button>
 
-        <button *ngIf="sendcontingencia" mat-raised-button color="accent" (click)="SubmiteAllDTE('null')">
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="bolt"></mat-icon>
-          Enviar Todos
-        </button>        
+        <!-- Recargar -->
+        <button
+          mat-mini-fab
+          color="primary"
+          (click)="GetAllPendinBill()"
+          aria-label="Recargar"
+        >
+          <mat-icon>rotate_left</mat-icon>
+        </button>
       </div>
-    </section>
+    </div>
   </mat-card-content>
 </mat-card>
-<mat-divider></mat-divider>
+
+<!-- Tabla y spinner -->
 <mat-card>
   <mat-card-content>
-    <mat-spinner *ngIf="showSpinner" value="spinnerValue" strokeWidth="3" [diameter]="40">
-    </mat-spinner>
-    <button style="float: right;" (click)="GetAllPendinBill()" mat-fab color="primary"
-      aria-label="Get all pending bill">
-      <mat-icon>rotate_left</mat-icon>
-    </button>
-   <!--  <section style="float: left;">
-      <mat-slide-toggle [(ngModel)]="searchconting" (change)="GetAllPendinBill()">Ver casos en contingentes</mat-slide-toggle>
-    </section> -->
+    <!-- Spinner -->
+    <mat-spinner
+      *ngIf="showSpinner"
+      strokeWidth="3"
+      [diameter]="40"
+      style="margin-bottom: 16px"
+    ></mat-spinner>
+
+    <!-- Tabla -->
     <section>
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
-        <!-- Name Column -->
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 demo-table"
+        style="width: 100%"
+      >
+        <!-- Columnas -->
         <ng-container matColumnDef="RecLoc">
           <th mat-header-cell *matHeaderCellDef>RecLoc</th>
-          <td mat-cell *matCellDef="let element">{{element.RecLoc}}</td>
+          <td mat-cell *matCellDef="let element">{{ element.RecLoc }}</td>
         </ng-container>
-        <!-- Position Column (click)="SubmiteDTE()" -->
+
         <ng-container matColumnDef="Dte-Number">
-          <th mat-header-cell *matHeaderCellDef>Numero Fact.</th>
-          <td mat-cell *matCellDef="let element">{{element.NumeroControl}}</td>
+          <th mat-header-cell *matHeaderCellDef>N° Factura</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.NumeroControl }}
+          </td>
         </ng-container>
 
-
-        <!-- Name Column -->
         <ng-container matColumnDef="CodigoGeneracion">
-          <th mat-header-cell *matHeaderCellDef>Codigo Generacion</th>
-          <td mat-cell *matCellDef="let element">{{element.CodigoGeneracion}}</td>
+          <th mat-header-cell *matHeaderCellDef>Código Generación</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.CodigoGeneracion }}
+          </td>
         </ng-container>
 
-        <!-- Weight Column -->
-        <!-- <ng-container matColumnDef="ArcIata">
-          <th mat-header-cell *matHeaderCellDef>ArcIata</th>
-          <td mat-cell *matCellDef="let element">{{element.ArcIata}}</td>
-        </ng-container> -->
-
-        <!-- Symbol Column -->
         <ng-container matColumnDef="FirstName">
-          <th mat-header-cell *matHeaderCellDef>FirstName</th>
-          <td mat-cell *matCellDef="let element">{{element.FirstName}}</td>
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let element">{{ element.FirstName }}</td>
         </ng-container>
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="LastName">
-          <th mat-header-cell *matHeaderCellDef>LastName</th>
-          <td mat-cell *matCellDef="let element">{{element.LastName}}</td>
-        </ng-container>
-        <ng-container matColumnDef="BookingDate">
-          <th mat-header-cell *matHeaderCellDef>BookingDate</th>
-          <td mat-cell *matCellDef="let element">{{element.BookingDate | date}}</td>
-        </ng-container>
-        <!-- Symbol Column -->
-        <!--       <ng-container matColumnDef="BookingDate">
-          <th mat-header-cell *matHeaderCellDef>BookingDate</th>
-          <td mat-cell *matCellDef="let element">{{element.BookingDate}}</td>
-        </ng-container> -->
-        <!-- Symbol Column -->
-        <!--   <ng-container matColumnDef="FlightDate">
-          <th mat-header-cell *matHeaderCellDef>FlightDate</th>
-          <td mat-cell *matCellDef="let element">{{element.FlightDate}}</td>
-        </ng-container> -->
-        <!-- Symbol Column -->
-        <!--  <ng-container matColumnDef="SegmentOrigin">
-          <th mat-header-cell *matHeaderCellDef>Symbol</th>
-          <td mat-cell *matCellDef="let element">{{element.SegmentOrigin}}</td>
-        </ng-container> -->
 
-        <!-- Symbol Column -->
-        <!--         <ng-container matColumnDef="SegmentDest">
-          <th mat-header-cell *matHeaderCellDef>SegmentDest</th>
-          <td mat-cell *matCellDef="let element">{{element.SegmentDest}}</td>
-        </ng-container> -->
-        <!-- Symbol Column -->
+        <ng-container matColumnDef="LastName">
+          <th mat-header-cell *matHeaderCellDef>Apellido</th>
+          <td mat-cell *matCellDef="let element">{{ element.LastName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="BookingDate">
+          <th mat-header-cell *matHeaderCellDef>Fecha Reserva</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.BookingDate | date }}
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="Base">
           <th mat-header-cell *matHeaderCellDef>Base</th>
-          <td mat-cell *matCellDef="let element">{{element.Base| currency}}</td>
+          <td mat-cell *matCellDef="let element">
+            {{ element.Base | currency }}
+          </td>
         </ng-container>
-        <!-- Symbol Column -->
+
         <ng-container matColumnDef="SV">
-          <th mat-header-cell *matHeaderCellDef>Iva</th>
-          <td mat-cell *matCellDef="let element">{{element.SV | currency}}</td>
+          <th mat-header-cell *matHeaderCellDef>IVA</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.SV | currency }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="BatchTransaction">
-          <th mat-header-cell *matHeaderCellDef>Numero de lote</th>
-          <td mat-cell *matCellDef="let element">{{element.BatchTransaction }}</td>
+          <th mat-header-cell *matHeaderCellDef>N° Lote</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.BatchTransaction }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="Estatus">
-          <th mat-header-cell *matHeaderCellDef> Estatus </th>
+          <th mat-header-cell *matHeaderCellDef>Estatus</th>
           <td mat-cell *matCellDef="let element">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="pending"></mat-icon>
+            <mat-icon fontIcon="pending"></mat-icon>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="Action">
-          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <th mat-header-cell *matHeaderCellDef>Acción</th>
           <td mat-cell *matCellDef="let element">
-            <button *ngIf="!sendcontingencia" mat-raised-button color="primary" (click)="SubmiteAllDTE(element.NumeroControl)">Enviar</button>
-            <button *ngIf="sendcontingencia" mat-raised-button color="accent" (click)="SubmiteAllDTE(element.NumeroControl)">Enviar</button>
+            <button
+              *ngIf="!sendcontingencia"
+              mat-raised-button
+              color="primary"
+              (click)="SubmiteAllDTE(element.NumeroControl)"
+            >
+              Enviar
+            </button>
+            <button
+              *ngIf="sendcontingencia"
+              mat-raised-button
+              color="accent"
+              (click)="SubmiteAllDTE(element.NumeroControl)"
+            >
+              Enviar
+            </button>
           </td>
         </ng-container>
-        <!--  <ng-container matColumnDef="Alter">
-          <th mat-header-cell *matHeaderCellDef>Conting</th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-raised-button color="primary" (click)="SubmiteContingencia(element.NumeroControl)">Conting</button>
-          </td>
-        </ng-container> -->
 
-
-
+        <!-- Filas -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-        <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)"
-          *matRowDef="let row; columns: displayedColumns;">
-        </tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="clickedRows.add(row)"
+          [class.demo-row-is-clicked]="clickedRows.has(row)"
+        ></tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[10, 30, 60, 90]" showFirstLastButtons
-      aria-label="Select page of periodic elements">
-    </mat-paginator>
+
+      <!-- Paginador -->
+      <mat-paginator [pageSizeOptions]="[10, 30, 60, 90]" showFirstLastButtons>
+      </mat-paginator>
     </section>
   </mat-card-content>
 </mat-card>

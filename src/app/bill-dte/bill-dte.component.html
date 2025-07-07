@@ -1,142 +1,179 @@
-<mat-card class="title_center">
-  <mat-card-title>Historico Facturas</mat-card-title>
-</mat-card>
+<mat-card-title
+  style="font-size: 20px; font-weight: 600; text-align: center; padding: 8px 0"
+>
+  📄 Historico de Facturas Enviadas
+</mat-card-title>
 
 <mat-divider></mat-divider>
 
-
-
 <mat-card>
   <mat-card-content>
+    <!-- Filtros y acciones -->
+    <!-- Filtros y botón de recarga alineados en la misma fila -->
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      style="margin-bottom: 16px"
+    >
+      <!-- Slide toggles alineados a la izquierda -->
+      <div fxLayout="row" fxLayoutGap="16px" style="align-items: center">
+        <mat-slide-toggle
+          [(ngModel)]="searchconting"
+          (change)="GetAllBillByCompany()"
+        >
+          Casos contingentes
+        </mat-slide-toggle>
 
-    <mat-grid-list cols="2" rowHeight="15:1">
-      <mat-grid-tile>
-        <mat-slide-toggle [(ngModel)]="searchconting" (change)="GetAllBillByCompany()" style="margin-right: 8px;">Casos
-          en
-          contingentes</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="searchanulados" (change)="GetAllBillByCompany()">Casos
-          anulados</mat-slide-toggle>
-      </mat-grid-tile>
-      <mat-grid-tile style="align-items:  self-end;">
-        <!--  <button (click)="GetAllBillByCompany()" mat-icon-button aria-label="Recall">
-          <mat-icon>rotate_left</mat-icon>
-        </button> -->
-        <button style="float: right;" (click)="GetAllBillByCompany()" mat-fab color="primary"
-          aria-label="Get all pending bill">
+        <mat-slide-toggle
+          [(ngModel)]="searchanulados"
+          (change)="GetAllBillByCompany()"
+        >
+          Casos anulados
+        </mat-slide-toggle>
+      </div>
+
+      <!-- Spinner y botón de reload alineados a la derecha -->
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+        <mat-spinner
+          *ngIf="showSpinner"
+          strokeWidth="3"
+          [diameter]="36"
+        ></mat-spinner>
+
+        <button
+          mat-mini-fab
+          color="primary"
+          (click)="GetAllBillByCompany()"
+          aria-label="Recargar"
+        >
           <mat-icon>rotate_left</mat-icon>
         </button>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <mat-spinner *ngIf="showSpinner" value="spinnerValue" strokeWidth="3" [diameter]="40"></mat-spinner>
-      </mat-grid-tile>
-    </mat-grid-list>
+      </div>
+    </div>
 
-
-
-    <mat-form-field>
+    <!-- Campo de búsqueda -->
+    <mat-form-field
+      appearance="outline"
+      style="width: 100%; margin-bottom: 16px"
+    >
       <mat-label>Filtro</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="DTE-00-00000000-00000000000XXXX"  #input>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="DTE-00-00000000-00000000000XXXX"
+        #input
+      />
     </mat-form-field>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!-- Name Column -->
+    <!-- Tabla de datos -->
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+      style="width: 100%"
+    >
+      <!-- Columnas definidas -->
       <ng-container matColumnDef="RecLoc">
         <th mat-header-cell *matHeaderCellDef>RecLoc</th>
-        <td mat-cell *matCellDef="let element">{{element.RecLoc}}</td>
+        <td mat-cell *matCellDef="let element">{{ element.RecLoc }}</td>
       </ng-container>
 
-
       <ng-container matColumnDef="NumeroControl">
-        <th mat-header-cell *matHeaderCellDef>Numero Fact.</th>
-        <td mat-cell *matCellDef="let element">{{element.NumeroControl}}</td>
+        <th mat-header-cell *matHeaderCellDef>N° Factura</th>
+        <td mat-cell *matCellDef="let element">{{ element.NumeroControl }}</td>
       </ng-container>
 
       <ng-container matColumnDef="CodigoGeneracion">
-        <th mat-header-cell *matHeaderCellDef>Codigo Generacion</th>
-        <td mat-cell *matCellDef="let element">{{element.CodigoGeneracion}}</td>
+        <th mat-header-cell *matHeaderCellDef>Código Generación</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.CodigoGeneracion }}
+        </td>
       </ng-container>
 
-
-
-      <!-- Symbol Column -->
       <ng-container matColumnDef="FirstName">
-        <th mat-header-cell *matHeaderCellDef>FirstName</th>
-        <td mat-cell *matCellDef="let element">{{element.FirstName}}</td>
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.FirstName }}</td>
       </ng-container>
-      <!-- Symbol Column -->
+
       <ng-container matColumnDef="LastName">
-        <th mat-header-cell *matHeaderCellDef>LastName</th>
-        <td mat-cell *matCellDef="let element">{{element.LastName}}</td>
+        <th mat-header-cell *matHeaderCellDef>Apellido</th>
+        <td mat-cell *matCellDef="let element">{{ element.LastName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="BookingDate">
-        <th mat-header-cell *matHeaderCellDef>BookingDate</th>
-        <td mat-cell *matCellDef="let element">{{element.BookingDate | date}}</td>
+        <th mat-header-cell *matHeaderCellDef>Fecha Reserva</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.BookingDate | date }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="Base">
         <th mat-header-cell *matHeaderCellDef>Base</th>
-        <td mat-cell *matCellDef="let element">{{element.Base | currency}}</td>
-      </ng-container>
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="SV">
-        <th mat-header-cell *matHeaderCellDef>Iva</th>
-        <td mat-cell *matCellDef="let element">{{element.SV | currency}}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Base | currency }}
+        </td>
       </ng-container>
 
+      <ng-container matColumnDef="SV">
+        <th mat-header-cell *matHeaderCellDef>IVA</th>
+        <td mat-cell *matCellDef="let element">{{ element.SV | currency }}</td>
+      </ng-container>
 
       <ng-container matColumnDef="BatchTransaction">
-        <th mat-header-cell *matHeaderCellDef>Numero de lote</th>
-        <td mat-cell *matCellDef="let element">{{element.BatchTransaction }}</td>
+        <th mat-header-cell *matHeaderCellDef>N° Lote</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.BatchTransaction }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="SubmitDte">
-        <th mat-header-cell *matHeaderCellDef>Fecha de envio</th>
-        <td mat-cell *matCellDef="let element">{{element.SubmitDte | date }}</td>
+        <th mat-header-cell *matHeaderCellDef>Fecha Envío</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.SubmitDte | date }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="Estatus">
-        <th mat-header-cell *matHeaderCellDef> Estatus </th>
+        <th mat-header-cell *matHeaderCellDef>Estatus</th>
         <td mat-cell *matCellDef="let element">
-          <mat-icon *ngIf="searchanulados" aria-hidden="false" aria-label="Example home icon"
-            fontIcon="delete"></mat-icon>
-          <mat-icon *ngIf="searchconting" aria-hidden="false" aria-label="Example home icon"
-            fontIcon="schedule_send"></mat-icon>
-          <mat-icon *ngIf="!searchanulados && !searchconting" aria-hidden="false" aria-label="Example home icon"
-            fontIcon="check_circle"></mat-icon>
+          <mat-icon *ngIf="searchanulados" fontIcon="delete"></mat-icon>
+          <mat-icon *ngIf="searchconting" fontIcon="schedule_send"></mat-icon>
+          <mat-icon
+            *ngIf="!searchanulados && !searchconting"
+            fontIcon="check_circle"
+          ></mat-icon>
         </td>
       </ng-container>
 
-      <!--  <ng-container matColumnDef="GenerarPDF">
-        <th mat-header-cell *matHeaderCellDef>PDF</th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" (click)="GeneratePDF(element)" [disabled]="searchanulados">
-            <mat-icon aria-hidden="false" aria-label="Anuarl" fontIcon="picture_as_pdf"></mat-icon>
-            PDF
-          </button>
-        </td>
-      </ng-container> -->
-
       <ng-container matColumnDef="Action">
-        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <th mat-header-cell *matHeaderCellDef>Acción</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" (click)="AnularFactura(element)" [disabled]="searchanulados">
-            <mat-icon aria-hidden="false" aria-label="Anuarl" fontIcon="delete"></mat-icon>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="AnularFactura(element)"
+            [disabled]="searchanulados"
+          >
+            <mat-icon fontIcon="delete"></mat-icon>
             Anular
           </button>
         </td>
       </ng-container>
 
+      <!-- Cabeceras y filas -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      <!-- Row shown when there is no matching data. -->
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- Sin coincidencias -->
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No hay considencia con el valor buscado: "{{input.value}}"</td>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          No hay coincidencia con el valor buscado: "{{ input.value }}"
+        </td>
       </tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[10,30, 60, 90]" showFirstLastButtons
-      aria-label="Select page of periodic elements">
+    <!-- Paginador -->
+    <mat-paginator [pageSizeOptions]="[10, 30, 60, 90]" showFirstLastButtons>
     </mat-paginator>
   </mat-card-content>
 </mat-card>

@@ -1,30 +1,61 @@
-/* upload.component.css */
-.file-input input[type="file"] {
-    display: none; /* Oculta el input real */
-  }
-  
-  .file-input button {
-    margin-right: 8px;
-  }
+.title_center {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+}
 
-  .file-input-alter button {
-    margin-top: auto;
-    margin-left: auto;
-    margin-right: 0;    
-    float: right;
-  }
+.upload-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
 
-  .title_center {
-   /*  margin-top: 8px; */
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center; /* align vertical */
-  }
+.upload-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
 
+.upload-title {
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #3f51b5;
+}
 
-  .center {
-    margin: auto;
-    width: fit-content;   
-    border: 0.50px solid rgb(203, 213, 248); 
-    padding: 15px;
-  }
+.upload-container {
+  padding: 20px;
+  border: 2px dashed #3f51b5;
+  border-radius: 10px;
+  background-color: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  min-height: 200px;
+}
+
+/* Opcional: mejora visual al hacer hover */
+.upload-container:hover {
+  background-color: #f0f4ff;
+}
+
+/* Si el ngx-awesome-uploader inserta un div con fondo gris, puedes anularlo así */
+.upload-container div {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* También puedes ajustar los botones internos si lo deseas */
+.upload-container button {
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: bold;
+}

@@ -19,7 +19,6 @@ import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { CustomerComponent } from './customer/customer.component';
 
-
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -31,11 +30,11 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatTableModule } from '@angular/material/table';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { ReportDteComponent } from './report-dte/report-dte.component';
- 
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -49,7 +48,6 @@ import { ReportDteComponent } from './report-dte/report-dte.component';
     UserComponent,
     CustomerComponent,
     ReportDteComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -72,9 +70,9 @@ import { ReportDteComponent } from './report-dte/report-dte.component';
     MatSlideToggleModule,
     MatChipsModule,
     MatGridListModule,
-    
+    FlexLayoutModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
